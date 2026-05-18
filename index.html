@@ -562,7 +562,7 @@ function exportExcel(){
   toast(`Exported ${results.length} result${results.length>1?'s':''} to Excel ✓`);
 }
 
-
+function retake(){
   st={phase:'intro',name:'',empId:'',dept:'',ans:new Array(Q.length).fill(-1),done:false};
   render();window.scrollTo(0,0);
 }
