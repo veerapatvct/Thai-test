@@ -301,7 +301,22 @@ function shuffle(arr,correctIdx){
 
 // Pre-shuffle all questions once when test starts
 function shuffleAllQuestions(){
-  st.shuffled=Q.map(q=>{
+  // Shuffle questions within each section separately, keep sections in order L→R→G
+  const sections=['L','R','G'];
+  let shuffledQ=[];
+  sections.forEach(sec=>{
+    const sectionQs=Q.map((q,i)=>({...q,origIdx:i})).filter(q=>q.s===sec);
+    // Fisher-Yates shuffle on questions
+    for(let i=sectionQs.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [sectionQs[i],sectionQs[j]]=[sectionQs[j],sectionQs[i]];
+    }
+    shuffledQ=shuffledQ.concat(sectionQs);
+  });
+  st.questionOrder=shuffledQ; // shuffled question objects with origIdx
+
+  // Also shuffle choices for each question
+  st.shuffled=shuffledQ.map(q=>{
     const {opts,ans}=shuffle(q.o,q.a);
     return{opts,ans};
   });
@@ -399,8 +414,9 @@ function renderTest(){
   const pct=Math.round(cnt/Q.length*100);
   let h=`<div class="progress-bar"><div class="pb-inner"><div class="pb-track"><div class="pb-fill" style="width:${pct}%"></div></div><div class="pb-label">${cnt} / ${Q.length} answered</div><div id="timer-display"></div></div></div>`;
 
+  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
   [{k:'L',l:'Listening',ic:'🔊',ib:'#EEF6FF',ic2:'#1A4C8A'},{k:'R',l:'Reading',ic:'📖',ib:'#FFFBF0',ic2:'#6B4C00'},{k:'G',l:'Grammar',ic:'✏️',ib:'#F0FBF7',ic2:'#0A4A38'}].forEach(sec=>{
-    const qs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s===sec.k);
+    const qs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s===sec.k);
     h+=`<div class="section"><div class="section-head"><div class="section-badge" style="background:${sec.ib};color:${sec.ic2}">${sec.ic}</div><div class="section-title">${sec.l}</div><div class="section-count">${qs.length} questions</div></div>`;
     let cur='';
     qs.forEach(q=>{
@@ -440,7 +456,8 @@ function pick(qi,oi){if(st.done)return;st.ans[qi]=oi;renderTest()}
 function playTh(idx){
   if(!('speechSynthesis' in window)){toast('Please use Chrome or Edge for audio');return}
   window.speechSynthesis.cancel();
-  const q=Q[idx];
+  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
+  const q=allQs[idx];
   const btn=document.getElementById('au-'+idx);
   const pi=document.getElementById('pi-'+idx);
 
@@ -497,12 +514,13 @@ function submitTest(){
 }
 
 async function saveResult(){
-  const correctAns=i=>(st.shuffled?st.shuffled[i].ans:Q[i].a);
+  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
+  const correctAns=i=>(st.shuffled?st.shuffled[i].ans:allQs[i].a);
   const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
   const pct=Math.round(tot/Q.length*100);
-  const ls=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='L').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
-  const rs=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
-  const gs=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='G').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
+  const ls=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='L').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
+  const rs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
+  const gs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='G').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
   let lv,cl;
   if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary'}
   else if(pct>=70){lv='Beginner Mid-High';cl='Class B2 — Upper Beginner'}
@@ -558,12 +576,13 @@ async function saveResult(){
 }
 
 function renderResults(){
-  const correctAns=i=>(st.shuffled?st.shuffled[i].ans:Q[i].a);
+  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
+  const correctAns=i=>(st.shuffled?st.shuffled[i].ans:allQs[i].a);
   const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
   const pct=Math.round(tot/Q.length*100);
-  const lqs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='L');
-  const rqs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='R');
-  const gqs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='G');
+  const lqs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='L');
+  const rqs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='R');
+  const gqs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='G');
   const ls=lqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
   const rs=rqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
   const gs=gqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
@@ -577,7 +596,7 @@ function renderResults(){
 
   const subs={};
   Q.forEach((q,i)=>{const k=q.s+'|'+q.sub;if(!subs[k])subs[k]={l:q.sub,s:q.s,sn:q.sn,c:0,t:0};subs[k].t++;if(st.ans[i]===q.a)subs[k].c++});
-  const wrongs=Q.map((q,i)=>({...q,idx:i})).filter(q=>st.ans[q.idx]!==correctAns(q.idx));
+  const wrongs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>st.ans[q.idx]!==correctAns(q.idx));
   const now=new Date(st.timestamp||Date.now());
   const dateStr=now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   const timeStr=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
