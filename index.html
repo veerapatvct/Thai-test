@@ -178,6 +178,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:
 .saving p{font-size:15px;color:var(--text2)}
 
 @media print{.progress-bar,.q-audio,.submit-row,.actions{display:none!important}.q-card,.card,.breakdown,.sc-card,.placement{break-inside:avoid}}
+
+/* TIMER */
+.timer-wrap{display:flex;align-items:center;gap:8px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:6px 14px;font-size:14px;font-weight:500;color:var(--text2)}
+.timer-wrap.warning{border-color:var(--gold);background:var(--gold-bg);color:var(--gold-dark)}
+.timer-wrap.danger{border-color:var(--red);background:var(--red-bg);color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
+.timer-wrap.warning .timer-dot{background:var(--gold)}
+.timer-wrap.danger .timer-dot{background:var(--red)}
 </style>
 </head>
 <body>
@@ -253,7 +262,7 @@ const Q=[
   {s:"G",sub:"Verbs",sn:1,th:"เขา .... ภาษาไทย",ph:"Khǎo .... phaa-sǎa Thai",q:"Choose the correct word to fill in the blank:",o:["พูด (phûut)","กิน (gin)","นอน (norn)","วิ่ง (wîng)"],a:0},
   {s:"G",sub:"Verbs",sn:1,th:"เธอ .... เสื้อสีแดง",ph:"Ter .... sûea sǐi daeng",q:"Choose the correct word to fill in the blank:",o:["กิน (gin)","ดื่ม (dùem)","ใส่ (sài)","วิ่ง (wîng)"],a:2},
   {s:"G",sub:"Verbs",sn:1,th:"ฉัน .... เพื่อนที่โรงเรียน",ph:"Chǎn .... phûean thêe roong-rian",q:"Choose the correct word to fill in the blank:",o:["เจอ (jer)","กิน (gin)","นอน (norn)","ขาย (khǎai)"],a:0},
-  {s:"G",sub:"Verbs",sn:1,th:"เขา .... เร็วมาก",ph:"Khǎo .... reo mâak",q:"Choose the correct word to fill in the blank:",o:["กิน (gin)","วิ่ง (wîng)","นอน (norn)","อ่าน (àan)"],a:1},
+  {s:"G",sub:"Verbs",sn:1,th:"เขา .... เร็วมาก",ph:"Khǎo .... reo mâak",q:"Choose the correct word to fill in the blank:",o:["วิ่ง (wîng)","อยู่ (yòo)","โต๊ะ (dtó)","ที่นี่ (thêe nêe)"],a:0},
   {s:"G",sub:"Verbs",sn:1,th:"ฉัน .... ดนตรี",ph:"Chǎn .... don-dtree",q:"Choose the correct word to fill in the blank:",o:["กิน (gin)","ดื่ม (dùem)","ฟัง (fang)","นั่ง (nâng)"],a:2},
   {s:"G",sub:"Sentence structure",sn:2,th:"แมวอยู่ .... โต๊ะ",ph:"Maew yòo .... dtó",q:"Choose the correct word to fill in the blank:",o:["ใน (nai)","บน (bon)","กับ (gàp)","ไป (pai)"],a:1},
   {s:"G",sub:"Sentence structure",sn:2,th:"เธอสวย ....",ph:"Ter sǔay ....",q:"Choose the correct word to fill in the blank:",o:["น้อย (nóoi)","เร็ว (reo)","มาก (mâak)","ช้า (cháa)"],a:2},
@@ -304,7 +313,7 @@ function renderIntro(){
     <div class="chip"><span class="dot" style="background:#4A90D9"></span>20 Listening</div>
     <div class="chip"><span class="dot" style="background:#C9972A"></span>20 Reading</div>
     <div class="chip"><span class="dot" style="background:#1A9E78"></span>20 Grammar</div>
-    <div class="chip"><span class="dot" style="background:#8B5CF6"></span>~30 minutes</div>
+    <div class="chip"><span class="dot" style="background:#8B5CF6"></span>⏱ 1 hour time limit</div>
   </div>
 </div>
 <div class="card">
@@ -329,13 +338,46 @@ function startTest(){
   st.empId=document.getElementById('f-id').value.trim();
   st.dept=document.getElementById('f-dept').value.trim()||'—';
   st.phase='test';
-  render();window.scrollTo(0,0);
+  st.startTime=Date.now();
+  st.timeLimit=60*60*1000; // 1 hour in ms
+  render();
+  window.scrollTo(0,0);
+  startTimer();
+}
+
+let timerInterval=null;
+function startTimer(){
+  if(timerInterval)clearInterval(timerInterval);
+  timerInterval=setInterval(()=>{
+    if(st.phase!=='test'){clearInterval(timerInterval);return}
+    const elapsed=Date.now()-st.startTime;
+    const remaining=st.timeLimit-elapsed;
+    updateTimerDisplay(remaining);
+    if(remaining<=0){
+      clearInterval(timerInterval);
+      toast('⏰ Time is up! Submitting your test...',3000);
+      setTimeout(()=>submitTest(),1500);
+    }
+  },1000);
+}
+
+function updateTimerDisplay(remaining){
+  const el=document.getElementById('timer-display');
+  if(!el)return;
+  const totalSec=Math.max(0,Math.floor(remaining/1000));
+  const mins=Math.floor(totalSec/60);
+  const secs=totalSec%60;
+  const label=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+  let cls='timer-wrap';
+  if(totalSec<=300)cls+=' danger';      // last 5 mins = red
+  else if(totalSec<=600)cls+=' warning'; // last 10 mins = amber
+  el.innerHTML=`<div class="${cls}"><span class="timer-dot"></span>⏱ ${label}</div>`;
 }
 
 function renderTest(){
   const cnt=st.ans.filter(a=>a>=0).length;
   const pct=Math.round(cnt/Q.length*100);
-  let h=`<div class="progress-bar"><div class="pb-inner"><div class="pb-track"><div class="pb-fill" style="width:${pct}%"></div></div><div class="pb-label">${cnt} / ${Q.length} answered</div></div></div>`;
+  let h=`<div class="progress-bar"><div class="pb-inner"><div class="pb-track"><div class="pb-fill" style="width:${pct}%"></div></div><div class="pb-label">${cnt} / ${Q.length} answered</div><div id="timer-display"></div></div></div>`;
 
   [{k:'L',l:'Listening',ic:'🔊',ib:'#EEF6FF',ic2:'#1A4C8A'},{k:'R',l:'Reading',ic:'📖',ib:'#FFFBF0',ic2:'#6B4C00'},{k:'G',l:'Grammar',ic:'✏️',ib:'#F0FBF7',ic2:'#0A4A38'}].forEach(sec=>{
     const qs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s===sec.k);
@@ -424,6 +466,7 @@ function playTh(idx){
 }
 
 function submitTest(){
+  if(timerInterval)clearInterval(timerInterval);
   st.done=true;
   st.timestamp=new Date().toISOString();
   saveResult();
@@ -601,6 +644,7 @@ function exportExcel(){
 }
 
 function retake(){
+  if(timerInterval)clearInterval(timerInterval);
   st={phase:'intro',name:'',empId:'',dept:'',ans:new Array(Q.length).fill(-1),done:false};
   render();window.scrollTo(0,0);
 }
