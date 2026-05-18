@@ -364,18 +364,8 @@ function shuffle(arr,correctIdx){
 
 // Pre-shuffle all questions once when test starts
 function shuffleAllQuestions(){
-  const groups=[['L','L2','L3','L4'],['R','R2','R3','R4'],['G','G2','G3','G4']];
-  let shuffledQ=[];
-  groups.forEach(group=>{
-    const groupQs=Q.map((q,i)=>({...q,origIdx:i})).filter(q=>group.includes(q.s));
-    for(let i=groupQs.length-1;i>0;i--){
-      const j=Math.floor(Math.random()*(i+1));
-      [groupQs[i],groupQs[j]]=[groupQs[j],groupQs[i]];
-    }
-    shuffledQ=shuffledQ.concat(groupQs);
-  });
-  st.questionOrder=shuffledQ;
-  st.shuffled=shuffledQ.map(q=>{
+  st.questionOrder=null;
+  st.shuffled=Q.map(q=>{
     const {opts,ans}=shuffle(q.o,q.a);
     return{opts,ans};
   });
@@ -473,7 +463,7 @@ function renderTest(){
   const pct=Math.round(cnt/Q.length*100);
   let h=`<div class="progress-bar"><div class="pb-inner"><div class="pb-track"><div class="pb-fill" style="width:${pct}%"></div></div><div class="pb-label">${cnt} / ${Q.length} answered</div><div id="timer-display"></div></div></div>`;
 
-  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
+  const allQs=Q.map((q,i)=>({...q,idx:i}));
   [{k:['L','L2','L3','L4'],l:'Listening',ic:'🔊',ib:'#EEF6FF',ic2:'#1A4C8A'},
    {k:['R','R2','R3','R4'],l:'Reading',ic:'📖',ib:'#FFFBF0',ic2:'#6B4C00'},
    {k:['G','G2','G3','G4'],l:'Grammar',ic:'✏️',ib:'#F0FBF7',ic2:'#0A4A38'}].forEach(sec=>{
@@ -518,7 +508,7 @@ function pick(qi,oi){if(st.done)return;st.ans[qi]=oi;renderTest()}
 function playTh(idx){
   if(!('speechSynthesis' in window)){toast('Please use Chrome or Edge for audio');return}
   window.speechSynthesis.cancel();
-  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
+  const allQs=Q.map((q,i)=>({...q,idx:i}));
   const q=allQs[idx];
   const btn=document.getElementById('au-'+idx);
   const pi=document.getElementById('pi-'+idx);
@@ -576,7 +566,7 @@ function submitTest(){
 }
 
 async function saveResult(){
-  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
+  const allQs=Q.map((q,i)=>({...q,idx:i}));
   const correctAns=i=>(st.shuffled?st.shuffled[i].ans:allQs[i].a);
   const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
   const pct=Math.round(tot/Q.length*100);
@@ -637,7 +627,7 @@ async function saveResult(){
 }
 
 function renderResults(){
-  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
+  const allQs=Q.map((q,i)=>({...q,idx:i}));
   const correctAns=i=>(st.shuffled?st.shuffled[i].ans:allQs[i].a);
   const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
   const pct=Math.round(tot/Q.length*100);
@@ -711,7 +701,7 @@ function renderResults(){
 }
 
 function copyRes(){
-  const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
+  const allQs=Q.map((q,i)=>({...q,idx:i}));
   const correctAns=i=>(st.shuffled?st.shuffled[i].ans:allQs[i].a);
   const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
   const pct=Math.round(tot/Q.length*100);
