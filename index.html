@@ -328,9 +328,12 @@ function renderTest(){
           <div class="play-icon" id="pi-${q.idx}">▶</div>
           <div><div style="font-size:13px;font-weight:400">Play audio (slow)</div><div style="font-size:11px;color:var(--text3);margin-top:1px">Click to hear Thai</div></div>
         </button>`;
+        // Listening: hide Thai text and phonetics — audio only
+      } else {
+        // Reading: show Thai text and phonetics
+        h+=`<div class="q-thai">${q.th.replace(/\n/g,'<br>')}</div>`;
+        h+=`<div class="q-phonetic">${q.ph.replace(/\n/g,' — ')}</div>`;
       }
-      h+=`<div class="q-thai">${q.th.replace(/\n/g,'<br>')}</div>`;
-      h+=`<div class="q-phonetic">${q.ph.replace(/\n/g,' — ')}</div>`;
       h+=`<div class="q-text">${q.q}</div><div class="opts">`;
       q.o.forEach((o,oi)=>{
         const sel=st.ans[q.idx]===oi?'selected':'';
