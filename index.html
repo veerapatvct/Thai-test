@@ -364,15 +364,15 @@ function shuffle(arr,correctIdx){
 
 // Pre-shuffle all questions once when test starts
 function shuffleAllQuestions(){
-  const sections=['L','L2','L3','L4','R','R2','R3','R4','G','G2','G3','G4'];
+  const groups=[['L','L2','L3','L4'],['R','R2','R3','R4'],['G','G2','G3','G4']];
   let shuffledQ=[];
-  sections.forEach(sec=>{
-    const sectionQs=Q.map((q,i)=>({...q,origIdx:i})).filter(q=>q.s===sec);
-    for(let i=sectionQs.length-1;i>0;i--){
+  groups.forEach(group=>{
+    const groupQs=Q.map((q,i)=>({...q,origIdx:i})).filter(q=>group.includes(q.s));
+    for(let i=groupQs.length-1;i>0;i--){
       const j=Math.floor(Math.random()*(i+1));
-      [sectionQs[i],sectionQs[j]]=[sectionQs[j],sectionQs[i]];
+      [groupQs[i],groupQs[j]]=[groupQs[j],groupQs[i]];
     }
-    shuffledQ=shuffledQ.concat(sectionQs);
+    shuffledQ=shuffledQ.concat(groupQs);
   });
   st.questionOrder=shuffledQ;
   st.shuffled=shuffledQ.map(q=>{
