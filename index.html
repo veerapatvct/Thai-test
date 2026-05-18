@@ -522,9 +522,10 @@ async function saveResult(){
   const rs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
   const gs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='G').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
   let lv,cl;
-  if(pct>=70){lv='Thai Communication 3';cl='Pre-Intermediate — Workplace Thai'}
-  else if(pct>=40){lv='Thai Communication 2';cl='Elementary — Daily Communication'}
-  else{lv='Thai Communication 1';cl='Complete Beginner — Survival Thai'}
+  if(pct>=85){lv='Thai Class 4';cl='Intermediate — Professional Thai'}
+  else if(pct>=55){lv='Thai Class 3';cl='Pre-Intermediate — Workplace Thai'}
+  else if(pct>=40){lv='Thai Class 2';cl='Elementary — Daily Communication'}
+  else{lv='Thai Class 1';cl='Complete Beginner — Survival Thai'}
 
   const ts=new Date(st.timestamp);
   const dateStr=ts.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
@@ -586,9 +587,10 @@ function renderResults(){
   const gs=gqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 
   let lv,cl,dt;
-  if(pct>=70){lv='Thai Communication 3';cl='Pre-Intermediate — Workplace Thai';dt='Strong foundation in Thai. This level focuses on workplace communication, expressing opinions, reading Thai texts, and understanding Thai cultural norms in business settings. Students scoring 70%+ may also qualify for TC4 — please verify with teacher.'}
-  else if(pct>=40){lv='Thai Communication 2';cl='Elementary — Daily Communication';dt='Has basic Thai knowledge. This level builds functional communication — ordering food, asking directions, simple conversations, basic sentence structure, and introductory workplace vocabulary.'}
-  else{lv='Thai Communication 1';cl='Complete Beginner — Survival Thai';dt='Starting from the basics. This level covers Thai alphabet and tone marks, greetings, numbers and time, reading signs and labels, survival vocabulary for food, transport, and common places.'}
+  if(pct>=85){lv='Thai Class 4';cl='Intermediate — Professional Thai';dt='Excellent foundation. This level focuses on business Thai, presentations, negotiations, reading Thai media and professional correspondence. Students are expected to communicate confidently with Thai colleagues at all levels.'}
+  else if(pct>=55){lv='Thai Class 3';cl='Pre-Intermediate — Workplace Thai';dt='Strong basic knowledge. This level focuses on workplace communication, expressing opinions, reading Thai texts, and understanding Thai cultural norms in business settings.'}
+  else if(pct>=40){lv='Thai Class 2';cl='Elementary — Daily Communication';dt='Has basic Thai knowledge. This level builds functional communication — ordering food, asking directions, simple conversations, basic sentence structure, and introductory workplace vocabulary.'}
+  else{lv='Thai Class 1';cl='Complete Beginner — Survival Thai';dt='Starting from the basics. This level covers Thai alphabet and tone marks, greetings, numbers and time, reading signs and labels, survival vocabulary for food, transport, and common places.'}
 
   const subs={};
   Q.forEach((q,i)=>{const k=q.s+'|'+q.sub;if(!subs[k])subs[k]={l:q.sub,s:q.s,sn:q.sn,c:0,t:0};subs[k].t++;if(st.ans[i]===q.a)subs[k].c++});
@@ -648,9 +650,10 @@ function copyRes(){
   const ls=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='L').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
   const rs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
   let lv;
-  if(pct>=70)lv='Thai Communication 3 — Pre-Intermediate';
-  else if(pct>=40)lv='Thai Communication 2 — Elementary';
-  else lv='Thai Communication 1 — Complete Beginner';
+  if(pct>=85)lv='Thai Class 4 — Intermediate';
+  else if(pct>=55)lv='Thai Class 3 — Pre-Intermediate';
+  else if(pct>=40)lv='Thai Class 2 — Elementary';
+  else lv='Thai Class 1 — Complete Beginner';
   const txt=`THAI PLACEMENT TEST RESULT\n${'─'.repeat(32)}\nName:         ${st.name}\nEmployee ID:  ${st.empId}\nDepartment:   ${st.dept}\nDate:         ${new Date().toLocaleDateString('en-GB')}\n\nTotal Score:  ${tot}/${Q.length} (${pct}%)\nListening:    ${ls}/20\nReading:      ${rs}/20\n\nPlacement:    ${lv}\n${'─'.repeat(32)}\nDelta Electronics (Thailand) — Thai Language Program`;
   navigator.clipboard.writeText(txt).then(()=>toast('Result copied to clipboard ✓')).catch(()=>toast('Could not copy — use Print instead'));
 }
