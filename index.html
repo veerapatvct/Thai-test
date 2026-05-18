@@ -288,6 +288,25 @@ const SC={
 let st={phase:'intro',name:'',empId:'',dept:'',ans:new Array(Q.length).fill(-1),done:false};
 const app=document.getElementById('app');
 
+function shuffle(arr,correctIdx){
+  // Pair each option with whether it's correct
+  const paired=arr.map((o,i)=>({o,correct:i===correctIdx}));
+  // Fisher-Yates shuffle
+  for(let i=paired.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [paired[i],paired[j]]=[paired[j],paired[i]];
+  }
+  return{opts:paired.map(p=>p.o),ans:paired.findIndex(p=>p.correct)};
+}
+
+// Pre-shuffle all questions once when test starts
+function shuffleAllQuestions(){
+  st.shuffled=Q.map(q=>{
+    const {opts,ans}=shuffle(q.o,q.a);
+    return{opts,ans};
+  });
+}
+
 function toast(msg,dur=3000){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
@@ -339,7 +358,8 @@ function startTest(){
   st.dept=document.getElementById('f-dept').value.trim()||'—';
   st.phase='test';
   st.startTime=Date.now();
-  st.timeLimit=60*60*1000; // 1 hour in ms
+  st.timeLimit=60*60*1000;
+  shuffleAllQuestions();
   render();
   window.scrollTo(0,0);
   startTimer();
@@ -399,7 +419,8 @@ function renderTest(){
         h+=`<div class="q-phonetic">${q.ph.replace(/\n/g,' — ')}</div>`;
       }
       h+=`<div class="q-text">${q.q}</div><div class="opts">`;
-      q.o.forEach((o,oi)=>{
+      const shuffledOpts=st.shuffled?st.shuffled[q.idx].opts:q.o;
+      shuffledOpts.forEach((o,oi)=>{
         const sel=st.ans[q.idx]===oi?'selected':'';
         h+=`<button class="opt ${sel}" onclick="pick(${q.idx},${oi})"><span class="radio"></span>${o}</button>`;
       });
@@ -476,11 +497,12 @@ function submitTest(){
 }
 
 async function saveResult(){
-  const tot=st.ans.reduce((s,a,i)=>s+(a===Q[i].a?1:0),0);
+  const correctAns=i=>(st.shuffled?st.shuffled[i].ans:Q[i].a);
+  const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
   const pct=Math.round(tot/Q.length*100);
-  const ls=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='L').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
-  const rs=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
-  const gs=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='G').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
+  const ls=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='L').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
+  const rs=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
+  const gs=Q.map((q,idx)=>({...q,idx})).filter(q=>q.s==='G').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
   let lv,cl;
   if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary'}
   else if(pct>=70){lv='Beginner Mid-High';cl='Class B2 — Upper Beginner'}
@@ -536,14 +558,15 @@ async function saveResult(){
 }
 
 function renderResults(){
-  const tot=st.ans.reduce((s,a,i)=>s+(a===Q[i].a?1:0),0);
+  const correctAns=i=>(st.shuffled?st.shuffled[i].ans:Q[i].a);
+  const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
   const pct=Math.round(tot/Q.length*100);
   const lqs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='L');
   const rqs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='R');
   const gqs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='G');
-  const ls=lqs.reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
-  const rs=rqs.reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
-  const gs=gqs.reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
+  const ls=lqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
+  const rs=rqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
+  const gs=gqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 
   let lv,cl,dt;
   if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary';dt='Strong foundation in Thai basics. Can move on to Elementary with a focus on conversations and daily Thai.'}
@@ -554,7 +577,7 @@ function renderResults(){
 
   const subs={};
   Q.forEach((q,i)=>{const k=q.s+'|'+q.sub;if(!subs[k])subs[k]={l:q.sub,s:q.s,sn:q.sn,c:0,t:0};subs[k].t++;if(st.ans[i]===q.a)subs[k].c++});
-  const wrongs=Q.map((q,i)=>({...q,idx:i})).filter(q=>st.ans[q.idx]!==q.a);
+  const wrongs=Q.map((q,i)=>({...q,idx:i})).filter(q=>st.ans[q.idx]!==correctAns(q.idx));
   const now=new Date(st.timestamp||Date.now());
   const dateStr=now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
   const timeStr=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
@@ -585,9 +608,11 @@ function renderResults(){
   if(wrongs.length>0){
     h+=`<div class="wrong-box"><h3>Incorrect answers (${wrongs.length})</h3>`;
     wrongs.forEach(q=>{
+      const opts=st.shuffled?st.shuffled[q.idx].opts:q.o;
+      const correct=correctAns(q.idx);
       h+=`<div class="wi"><strong style="color:var(--text3)">Q${q.idx+1}</strong> — ${q.q}<br>
-      <span style="color:var(--red)">✗ Your answer: ${q.o[st.ans[q.idx]]||'—'}</span>&nbsp;&nbsp;
-      <span style="color:var(--green)">✓ Correct: ${q.o[q.a]}</span></div>`;
+      <span style="color:var(--red)">✗ Your answer: ${opts[st.ans[q.idx]]||'—'}</span>&nbsp;&nbsp;
+      <span style="color:var(--green)">✓ Correct: ${opts[correct]}</span></div>`;
     });
     h+=`</div>`;
   }
