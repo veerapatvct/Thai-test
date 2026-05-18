@@ -522,7 +522,7 @@ async function saveResult(){
   const rs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
   const gs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='G').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
   let lv,cl;
-  if(pct>=85){lv='Thai Class 4';cl='Intermediate — Professional Thai'}
+  if(pct>=90){lv='Thai Class 4';cl='Intermediate — Teacher Verification Required'}
   else if(pct>=55){lv='Thai Class 3';cl='Pre-Intermediate — Workplace Thai'}
   else if(pct>=40){lv='Thai Class 2';cl='Elementary — Daily Communication'}
   else{lv='Thai Class 1';cl='Complete Beginner — Survival Thai'}
@@ -587,7 +587,7 @@ function renderResults(){
   const gs=gqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 
   let lv,cl,dt;
-  if(pct>=85){lv='Thai Class 4';cl='Intermediate — Professional Thai';dt='Excellent foundation. This level focuses on business Thai, presentations, negotiations, reading Thai media and professional correspondence. Students are expected to communicate confidently with Thai colleagues at all levels.'}
+  if(pct>=90){lv='Thai Class 4';cl='Intermediate — Teacher Verification Required';dt='Outstanding score. You may be ready for Thai Class 4 (Intermediate). This level covers business Thai, presentations, negotiations, and professional correspondence. A short verbal assessment by the teacher is required to confirm placement into Thai Class 4.'}
   else if(pct>=55){lv='Thai Class 3';cl='Pre-Intermediate — Workplace Thai';dt='Strong basic knowledge. This level focuses on workplace communication, expressing opinions, reading Thai texts, and understanding Thai cultural norms in business settings.'}
   else if(pct>=40){lv='Thai Class 2';cl='Elementary — Daily Communication';dt='Has basic Thai knowledge. This level builds functional communication — ordering food, asking directions, simple conversations, basic sentence structure, and introductory workplace vocabulary.'}
   else{lv='Thai Class 1';cl='Complete Beginner — Survival Thai';dt='Starting from the basics. This level covers Thai alphabet and tone marks, greetings, numbers and time, reading signs and labels, survival vocabulary for food, transport, and common places.'}
@@ -650,7 +650,7 @@ function copyRes(){
   const ls=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='L').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
   const rs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
   let lv;
-  if(pct>=85)lv='Thai Class 4 — Intermediate';
+  if(pct>=90)lv='Thai Class 4 — Intermediate (Teacher Verification Required)';
   else if(pct>=55)lv='Thai Class 3 — Pre-Intermediate';
   else if(pct>=40)lv='Thai Class 2 — Elementary';
   else lv='Thai Class 1 — Complete Beginner';
