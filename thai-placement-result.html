@@ -1,0 +1,781 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thai Language Placement Result</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue-50: #EBF4FF;
+    --blue-100: #BFDBFE;
+    --blue-200: #93C5FD;
+    --blue-400: #3B82F6;
+    --blue-500: #2563EB;
+    --blue-600: #1D4ED8;
+    --blue-700: #1E3A8A;
+    --navy: #0F2057;
+    --white: #FFFFFF;
+    --gray-50: #F8FAFC;
+    --gray-100: #F1F5F9;
+    --gray-200: #E2E8F0;
+    --gray-400: #94A3B8;
+    --gray-600: #475569;
+    --gray-800: #1E293B;
+    --radius-sm: 12px;
+    --radius-md: 18px;
+    --radius-lg: 24px;
+    --radius-xl: 32px;
+    --shadow-sm: 0 2px 8px rgba(37, 99, 235, 0.08);
+    --shadow-md: 0 8px 32px rgba(37, 99, 235, 0.12);
+    --shadow-lg: 0 20px 60px rgba(37, 99, 235, 0.16);
+    --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.3);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: linear-gradient(160deg, #EBF4FF 0%, #F0F6FF 40%, #F8FAFC 70%, #EEF2FF 100%);
+    min-height: 100vh;
+    color: var(--gray-800);
+    overflow-x: hidden;
+  }
+
+  /* Background decoration */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(59,130,246,0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -200px; left: -200px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(99,102,241,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .container {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    text-align: center;
+    margin-bottom: 40px;
+    animation: fadeInDown 0.6s ease both;
+  }
+  .brand-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: white;
+    border: 1px solid var(--blue-100);
+    border-radius: 100px;
+    padding: 6px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue-500);
+    letter-spacing: 0.04em;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+  .brand-badge svg { width: 16px; height: 16px; }
+  .page-header h1 {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(22px, 4vw, 28px);
+    font-weight: 800;
+    color: var(--navy);
+  }
+  .page-header p {
+    font-size: 15px;
+    color: var(--gray-600);
+    margin-top: 6px;
+  }
+
+  /* ── Hero Result Card ── */
+  .hero-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    padding: 48px 40px;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(59,130,246,0.1);
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 40px;
+    align-items: center;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    animation: fadeInUp 0.7s ease 0.1s both;
+  }
+  .hero-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--blue-400), #818CF8, var(--blue-200));
+  }
+  .hero-card::after {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 280px; height: 280px;
+    background: radial-gradient(circle, rgba(59,130,246,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .avatar-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+  }
+  .avatar-frame {
+    width: 200px;
+    height: 200px;
+    border-radius: 24px;
+    background: linear-gradient(135deg, var(--blue-50), #EEF2FF);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(37,99,235,0.15), 0 0 0 6px rgba(59,130,246,0.08);
+    animation: float 3s ease-in-out infinite;
+  }
+  .avatar-frame img {
+    width: 190px;
+    height: 190px;
+    object-fit: cover;
+    border-radius: 20px;
+    transition: transform 0.4s ease;
+  }
+  .avatar-frame:hover img { transform: scale(1.04); }
+
+  .score-ring {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: linear-gradient(135deg, var(--blue-50), #EEF2FF);
+    border-radius: var(--radius-md);
+    padding: 14px 28px;
+    border: 1px solid var(--blue-100);
+    width: 100%;
+  }
+  .score-ring .score-number {
+    font-family: 'Nunito', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    color: var(--blue-500);
+    line-height: 1;
+  }
+  .score-ring .score-label {
+    font-size: 12px;
+    color: var(--gray-400);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  .hero-info { position: relative; z-index: 1; }
+
+  .level-emoji {
+    font-size: 28px;
+    margin-bottom: 4px;
+    display: block;
+  }
+  .level-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(26px, 4vw, 36px);
+    font-weight: 900;
+    color: var(--navy);
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .level-tagline {
+    font-size: 15px;
+    color: var(--blue-500);
+    font-weight: 600;
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .level-desc {
+    font-size: 14.5px;
+    color: var(--gray-600);
+    line-height: 1.7;
+    margin-bottom: 24px;
+  }
+
+  .meta-row {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .meta-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--blue-50);
+    border: 1px solid var(--blue-100);
+    border-radius: 100px;
+    padding: 6px 14px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--blue-600);
+  }
+  .meta-pill.green {
+    background: #F0FDF4;
+    border-color: #BBF7D0;
+    color: #16A34A;
+  }
+
+  .recommended-box {
+    background: linear-gradient(135deg, var(--blue-500), var(--blue-600));
+    border-radius: var(--radius-md);
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 20px rgba(37,99,235,0.25);
+  }
+  .recommended-icon {
+    width: 40px; height: 40px;
+    background: rgba(255,255,255,0.2);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; flex-shrink: 0;
+  }
+  .recommended-text small {
+    display: block;
+    font-size: 11px;
+    color: rgba(255,255,255,0.75);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+  .recommended-text strong {
+    font-family: 'Nunito', sans-serif;
+    font-size: 17px;
+    font-weight: 800;
+    color: white;
+  }
+
+  /* ── Journey Section ── */
+  .section-label {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--blue-400);
+    text-align: center;
+    margin-bottom: 8px;
+    animation: fadeInUp 0.5s ease 0.2s both;
+  }
+  .section-title {
+    font-family: 'Nunito', sans-serif;
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy);
+    text-align: center;
+    margin-bottom: 24px;
+    animation: fadeInUp 0.5s ease 0.3s both;
+  }
+
+  .journey-track {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.7s ease 0.35s both;
+  }
+  .journey-card {
+    flex: 1;
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 0;
+    padding: 20px 14px 16px;
+    text-align: center;
+    cursor: default;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .journey-card:first-child { border-radius: var(--radius-md) 0 0 var(--radius-md); }
+  .journey-card:last-child { border-radius: 0 var(--radius-md) var(--radius-md) 0; }
+  .journey-card + .journey-card { border-left: none; }
+
+  .journey-card.active {
+    background: linear-gradient(160deg, var(--blue-500) 0%, var(--blue-600) 100%);
+    border-color: var(--blue-500);
+    transform: scaleY(1.04);
+    z-index: 2;
+    border-radius: var(--radius-md) !important;
+    box-shadow: var(--shadow-glow), 0 8px 32px rgba(37,99,235,0.3);
+  }
+  .journey-card.muted {
+    opacity: 0.5;
+  }
+  .journey-card:not(.active):not(.muted):hover {
+    border-color: var(--blue-200);
+    background: var(--blue-50);
+  }
+
+  .journey-avatar {
+    width: 72px; height: 72px;
+    border-radius: 14px;
+    overflow: hidden;
+    margin: 0 auto 10px;
+    background: var(--blue-50);
+    border: 2px solid var(--blue-100);
+  }
+  .journey-card.active .journey-avatar {
+    border-color: rgba(255,255,255,0.3);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  }
+  .journey-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .journey-card.active .journey-avatar { background: rgba(255,255,255,0.15); }
+
+  .journey-emoji { font-size: 20px; margin-bottom: 6px; display: block; }
+  .journey-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    color: var(--navy);
+    line-height: 1.2;
+  }
+  .journey-card.active .journey-name { color: white; }
+  .journey-card.muted .journey-name { color: var(--gray-400); }
+  .journey-range {
+    font-size: 11px;
+    color: var(--gray-400);
+    margin-top: 4px;
+    font-weight: 500;
+  }
+  .journey-card.active .journey-range { color: rgba(255,255,255,0.7); }
+
+  .current-badge {
+    display: inline-block;
+    background: rgba(255,255,255,0.25);
+    color: white;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    padding: 3px 8px;
+    margin-top: 8px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+
+  /* ── SFM Cards ── */
+  .sfm-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 40px;
+    animation: fadeInUp 0.7s ease 0.45s both;
+  }
+  .sfm-card {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 24px;
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .sfm-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+  .sfm-card.strengths::before { background: linear-gradient(90deg, #34D399, #059669); }
+  .sfm-card.focus::before { background: linear-gradient(90deg, var(--blue-400), #818CF8); }
+  .sfm-card.mission::before { background: linear-gradient(90deg, #F59E0B, #EF4444); }
+
+  .sfm-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+
+  .sfm-icon {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 14px;
+  }
+  .sfm-card.strengths .sfm-icon { background: #F0FDF4; }
+  .sfm-card.focus .sfm-icon { background: var(--blue-50); }
+  .sfm-card.mission .sfm-icon { background: #FFFBEB; }
+
+  .sfm-card h3 {
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+  .sfm-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--gray-600);
+    line-height: 1.5;
+  }
+  .sfm-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 6px;
+  }
+  .sfm-card.strengths .sfm-dot { background: #10B981; }
+  .sfm-card.focus .sfm-dot { background: var(--blue-400); }
+  .sfm-card.mission .sfm-dot { background: #F59E0B; }
+
+  /* ── Progress Bar ── */
+  .progress-section {
+    background: white;
+    border-radius: var(--radius-lg);
+    padding: 28px 32px;
+    border: 1px solid var(--gray-200);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 40px;
+    animation: fadeInUp 0.7s ease 0.5s both;
+  }
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .progress-header span:first-child {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+  }
+  .progress-header span:last-child {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--blue-500);
+  }
+  .progress-bar {
+    height: 10px;
+    background: var(--blue-50);
+    border-radius: 100px;
+    overflow: hidden;
+    border: 1px solid var(--blue-100);
+  }
+  .progress-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, var(--blue-400), #818CF8);
+    position: relative;
+    transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .progress-fill::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%);
+    animation: shimmer 2s infinite;
+  }
+
+
+
+  /* ── Animations ── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  @keyframes shimmer {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 700px) {
+    .hero-card {
+      grid-template-columns: 1fr;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .avatar-wrapper { flex-direction: row; justify-content: center; gap: 16px; }
+    .avatar-frame { width: 140px; height: 140px; }
+    .avatar-frame img { width: 130px; height: 130px; }
+    .score-ring { width: auto; padding: 10px 20px; }
+    .recommended-box { text-align: left; }
+    .sfm-grid { grid-template-columns: 1fr; }
+    .journey-track { flex-wrap: wrap; gap: 8px; }
+    .journey-card, .journey-card:first-child, .journey-card:last-child { border-radius: var(--radius-md) !important; border: 1px solid var(--gray-200) !important; flex: 1 1 calc(33% - 8px); }
+    .journey-card + .journey-card { border-left: 1px solid var(--gray-200); }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="brand-badge">
+      <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 2L2 7l8 5 8-5-8-5zM2 13l8 5 8-5M2 10l8 5 8-5"/></svg>
+      Thai Language Assessment · Delta Electronics
+    </div>
+    <h1>Your Placement Result</h1>
+    <p id="greeting-line">Here's where your Thai journey stands, <strong id="user-name-header"></strong></p>
+  </div>
+
+  <!-- Hero Card -->
+  <div class="hero-card" id="hero-card">
+    <div class="avatar-wrapper">
+      <div class="avatar-frame">
+        <img id="hero-avatar" src="" alt="Learner avatar" />
+      </div>
+      <div class="score-ring">
+        <span class="score-number" id="score-display">--</span>
+        <span class="score-label">Score · <span id="pct-display">--%</span></span>
+      </div>
+    </div>
+    <div class="hero-info">
+      <span class="level-emoji" id="hero-emoji"></span>
+      <h2 class="level-title" id="hero-title"></h2>
+      <p class="level-tagline" id="hero-tagline"></p>
+      <p class="level-desc" id="hero-desc"></p>
+      <div class="meta-row">
+        <div class="meta-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
+          Score: <span id="meta-score"></span> / 60
+        </div>
+        <div class="meta-pill green">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          Placement: <span id="meta-level"></span>
+        </div>
+      </div>
+      <div class="recommended-box">
+        <div class="recommended-icon">📚</div>
+        <div class="recommended-text">
+          <small>Recommended Class</small>
+          <strong id="rec-class"></strong>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-section">
+    <div class="progress-header">
+      <span>Overall Proficiency</span>
+      <span id="pct-bar-label">0%</span>
+    </div>
+    <div class="progress-bar">
+      <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+  </div>
+
+  <!-- Journey -->
+  <div class="section-label">Learning Journey</div>
+  <div class="section-title">Your Path to Thai Mastery</div>
+
+  <div class="journey-track" id="journey-track">
+    <!-- Populated by JS -->
+  </div>
+
+  <!-- SFM Cards -->
+  <div class="section-label">Profile Deep Dive</div>
+  <div class="section-title">Strengths · Focus · Mission</div>
+
+  <div class="sfm-grid">
+    <div class="sfm-card strengths">
+      <div class="sfm-icon">✨</div>
+      <h3>Your Strengths</h3>
+      <div id="sfm-strengths"></div>
+    </div>
+    <div class="sfm-card focus">
+      <div class="sfm-icon">🎯</div>
+      <h3>Focus Area</h3>
+      <div id="sfm-focus"></div>
+    </div>
+    <div class="sfm-card mission">
+      <div class="sfm-icon">🚀</div>
+      <h3>Next Mission</h3>
+      <div id="sfm-mission"></div>
+    </div>
+  </div>
+
+
+
+</div>
+
+<script>
+const userResult = {
+  name: "John Smith",
+  score: 39,
+  percentage: 65
+};
+
+const levels = [
+  {
+    id: "thai-starter",
+    emoji: "🌱",
+    title: "Thai Starter",
+    tagline: "Every fluent speaker starts somewhere.",
+    desc: "You are at the very beginning of your Thai language journey. You can recognise a few words and greetings, but daily conversations are still a challenge. This is an exciting starting point — every great journey begins with a single step.",
+    range: [0, 20],
+    class: "Thai Foundations 1",
+    image: "images/thai-starter.png",
+    strengths: ["Openness to learning", "No bad habits to unlearn", "Strong motivation to start fresh"],
+    focus: ["Basic Thai alphabet recognition", "Common greetings and polite phrases", "Numbers and essential vocabulary"],
+    mission: ["Complete 5 pronunciation drills daily", "Learn 10 new words per week", "Watch 1 Thai video with subtitles daily"]
+  },
+  {
+    id: "survival-explorer",
+    emoji: "🎒",
+    title: "Survival Explorer",
+    tagline: "You are beginning to navigate Thailand with confidence.",
+    desc: "You can handle basic survival situations — ordering food, asking for directions, and simple transactions. You are building your Thai foundation with practical everyday phrases that help you get around.",
+    range: [21, 34],
+    class: "Thai Foundations 2",
+    image: "images/survival-explorer.png",
+    strengths: ["Functional survival vocabulary", "Good grasp of basic phrases", "Comfortable with simple interactions"],
+    focus: ["Expanding conversational vocabulary", "Tones and pronunciation clarity", "Simple sentence construction"],
+    mission: ["Practice 2 conversations daily", "Master the 5 Thai tones this week", "Join 1 Thai language exchange session"]
+  },
+  {
+    id: "daily-connector",
+    emoji: "🗣️",
+    title: "Daily Connector",
+    tagline: "You communicate to connect.",
+    desc: "You can already communicate in simple Thai situations with growing confidence. You handle routine exchanges at work and in daily life, and Thai colleagues appreciate your effort to engage in their language.",
+    range: [35, 44],
+    class: "Thai Communication 2",
+    image: "images/daily-connector.png",
+    strengths: ["Comfortable in social conversations", "Decent vocabulary range", "Good comprehension of slow speech"],
+    focus: ["Natural conversation flow and pacing", "Workplace-specific vocabulary", "Listening to native speed speech"],
+    mission: ["Hold 1 full conversation in Thai daily", "Learn 5 workplace phrases per day", "Listen to Thai radio for 15 minutes daily"]
+  },
+  {
+    id: "workplace-navigator",
+    emoji: "🧭",
+    title: "Workplace Navigator",
+    tagline: "You're no longer just learning Thai — you're using it.",
+    desc: "You navigate professional environments in Thai with real competence. You can participate in meetings, give instructions, and handle workplace scenarios confidently. You are a functional Thai communicator in the corporate context.",
+    range: [45, 50],
+    class: "Thai Professional 1",
+    image: "images/workplace-navigator.png",
+    strengths: ["Strong professional vocabulary", "Confident in workplace settings", "Good grasp of formal Thai register"],
+    focus: ["Complex discussion and negotiation", "Idiomatic expressions and nuance", "Formal writing and email Thai"],
+    mission: ["Lead 1 meeting segment in Thai per week", "Read a Thai news article daily", "Study Thai business culture and etiquette"]
+  },
+  {
+    id: "thai-path-builder",
+    emoji: "🚀",
+    title: "Thai Path Builder",
+    tagline: "You are building real Thai communication power.",
+    desc: "You possess advanced Thai communication ability that goes beyond daily needs. You engage in complex discussions, understand nuanced language, and can adapt your Thai to different audiences and contexts with fluency and precision.",
+    range: [51, 60],
+    class: "Thai Advanced Communication",
+    image: "images/thai-path-builder.png",
+    strengths: ["Near-fluent conversational ability", "Strong cultural understanding", "Can navigate complex topics in Thai"],
+    focus: ["Mastering subtle tones and regional dialects", "Advanced business and negotiation Thai", "Written Thai proficiency"],
+    mission: ["Mentor a beginner Thai learner this month", "Complete a Thai language certification", "Present a topic in Thai in your next team meeting"]
+  }
+];
+
+function getLevelByScore(score) {
+  return levels.find(l => score >= l.range[0] && score <= l.range[1]) || levels[0];
+}
+
+function makeSFMItems(items, cardId) {
+  return items.map(t => `
+    <div class="sfm-item">
+      <span class="sfm-dot"></span>
+      <span>${t}</span>
+    </div>
+  `).join('');
+}
+
+function init() {
+  const { name, score, percentage } = userResult;
+  const level = getLevelByScore(score);
+
+  // Header
+  document.getElementById('user-name-header').textContent = name;
+
+  // Hero
+  document.getElementById('hero-avatar').src = level.image;
+  document.getElementById('hero-avatar').alt = level.title;
+  document.getElementById('hero-emoji').textContent = level.emoji;
+  document.getElementById('hero-title').textContent = level.title;
+  document.getElementById('hero-tagline').textContent = `"${level.tagline}"`;
+  document.getElementById('hero-desc').textContent = level.desc;
+  document.getElementById('score-display').textContent = score;
+  document.getElementById('pct-display').textContent = `${percentage}%`;
+  document.getElementById('meta-score').textContent = score;
+  document.getElementById('meta-level').textContent = level.title;
+  document.getElementById('rec-class').textContent = level.class;
+
+  // Progress bar
+  document.getElementById('pct-bar-label').textContent = `${percentage}%`;
+  setTimeout(() => {
+    document.getElementById('progress-fill').style.width = `${percentage}%`;
+  }, 400);
+
+  // Journey
+  const track = document.getElementById('journey-track');
+  track.innerHTML = levels.map((l, i) => {
+    const isActive = l.id === level.id;
+    const isPast = l.range[1] < level.range[0];
+    const cls = isActive ? 'active' : (isPast ? '' : 'muted');
+    return `
+      <div class="journey-card ${cls}">
+        <div class="journey-avatar">
+          <img src="${l.image}" alt="${l.title}" loading="lazy" />
+        </div>
+        <span class="journey-emoji">${l.emoji}</span>
+        <div class="journey-name">${l.title}</div>
+        <div class="journey-range">${l.range[0]}–${l.range[1]}</div>
+        ${isActive ? '<span class="current-badge">CURRENT LEVEL</span>' : ''}
+      </div>
+    `;
+  }).join('');
+
+  // SFM
+  document.getElementById('sfm-strengths').innerHTML = makeSFMItems(level.strengths, 'strengths');
+  document.getElementById('sfm-focus').innerHTML = makeSFMItems(level.focus, 'focus');
+  document.getElementById('sfm-mission').innerHTML = makeSFMItems(level.mission, 'mission');
+}
+
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
