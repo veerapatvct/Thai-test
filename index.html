@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Delta Thai Language Placement Assessment</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Kodchasan:wght@300;400;500;600;700&family=Sarabun:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -32,8 +32,8 @@
 --green:#2E7D32;
 --green-bg:#E8F5E9;
 --r:10px;--r-lg:16px;
---font:'Prompt',sans-serif;
---font-th:'Kodchasan',sans-serif;
+--font:'Sarabun',sans-serif;
+--font-th:'Sarabun',sans-serif;
 --shadow:0 2px 8px rgba(0,112,201,0.05);
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;min-height:100vh;font-weight:300}
@@ -112,7 +112,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:
 
 /* OPTIONS */
 .opts{display:flex;flex-direction:column;gap:7px}
-.opt{display:flex;align-items:center;gap:12px;padding:11px 16px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;font-size:15px;color:var(--text);background:transparent;text-align:left;width:100%;font-family:'Kodchasan',sans-serif;font-weight:400;transition:all .2s;line-height:1.6}
+.opt{display:flex;align-items:center;gap:12px;padding:11px 16px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;font-size:16px;color:var(--text);background:transparent;text-align:left;width:100%;font-family:'Sarabun',sans-serif;font-weight:400;transition:all .2s;line-height:1.8}
 .opt:hover:not([disabled]){border-color:var(--border-focus);background:var(--gold-bg)}
 .opt.selected{border-color:var(--gold);background:var(--gold-bg);color:var(--gold-dark)}
 .opt.correct{border-color:var(--green);background:var(--green-bg);color:var(--green)}
@@ -352,7 +352,11 @@ app.innerHTML=`
 <div class="form-grid">
   <div class="fgroup"><label>Full name *</label><input id="f-name" placeholder="e.g. John Smith" oninput="chk()"></div>
   <div class="fgroup"><label>Employee ID *</label><input id="f-id" placeholder="e.g. 123456" inputmode="numeric" pattern="[0-9]*" maxlength="10" oninput="this.value=this.value.replace(/\\D/g,'');chk()"></div>
-  <div class="fgroup" style="grid-column:1/-1"><label>Work Email *</label><input id="f-email" type="email" placeholder="name@deltaww.com" oninput="validateEmail()"><div id="email-error" style="display:none;margin-top:6px;font-size:12.5px;color:#C0392B;align-items:center;gap:5px"><span>⚠️</span><span id="email-error-msg"></span></div><div id="email-hint" style="margin-top:5px;font-size:12px;color:var(--text3)">Must be a @deltaww.com address</div></div>
+  <div class="fgroup" style="grid-column:1/-1">
+    <label>Work Email *</label>
+    <input id="f-email" type="text" placeholder="name@deltaww.com" oninput="validateEmail()" autocomplete="email">
+    <div id="email-msg" style="margin-top:6px;font-size:12.5px;min-height:18px;"></div>
+  </div>
 </div>
 <div class="fgroup"><label>Department (optional)</label><input id="f-dept" placeholder="e.g. Engineering" style="margin-bottom:0"></div>
 <button class="q-audio" style="width:100%;justify-content:center;margin:18px 0 10px" onclick="playSampleAudio()">
@@ -365,45 +369,28 @@ app.innerHTML=`
 
 function validateEmail(){
   const input=document.getElementById('f-email');
-  if(!input)return;
+  const msg=document.getElementById('email-msg');
+  if(!input||!msg){chk();return;}
   const val=input.value.replace(/\s/g,'');
   input.value=val;
-
-  const errorDiv=document.getElementById('email-error');
-  const errorMsg=document.getElementById('email-error-msg');
-  const hint=document.getElementById('email-hint');
-
-  if(!errorDiv||!errorMsg||!hint){chk();return;}
-
-  if(val.length===0){
-    input.className='';
-    errorDiv.style.display='none';
-    hint.style.display='block';
-    chk();return;
-  }
-
   const valid=/^[^\s@]+@deltaww\.com$/i.test(val);
-
-  if(valid){
-    input.classList.remove('error');
-    input.classList.add('valid');
-    errorDiv.style.display='none';
-    hint.style.display='none';
+  if(val.length===0){
+    input.style.borderColor='';input.style.background='';
+    msg.innerHTML='<span style="color:#7F95A8;font-size:12px;">Must be a @deltaww.com address</span>';
+  } else if(valid){
+    input.style.borderColor='#2E7D32';input.style.background='#F0FDF4';
+    msg.innerHTML='<span style="color:#2E7D32;">✓ Valid Delta email</span>';
   } else {
-    input.classList.remove('valid');
-    input.classList.add('error');
-    hint.style.display='none';
-    let msg='';
-    if(!val.includes('@')){
-      msg='Missing @ symbol — e.g. name@deltaww.com';
-    } else {
+    input.style.borderColor='#C0392B';input.style.background='#FEF2F2';
+    let txt='';
+    if(!val.includes('@')) txt='Missing @ symbol — e.g. name@deltaww.com';
+    else {
       const domain=val.split('@')[1]||'';
-      if(!domain) msg='Please enter your full Delta email';
-      else if(!/deltaww\.com$/i.test(domain)) msg='"@'+domain+'" is not valid — must be @deltaww.com';
-      else msg='Email must end with @deltaww.com';
+      if(!domain) txt='Please enter your full Delta email';
+      else if(!/deltaww\.com$/i.test(domain)) txt='"@'+domain+'" is not valid — must be @deltaww.com';
+      else txt='Email must end with @deltaww.com';
     }
-    errorMsg.textContent=msg;
-    errorDiv.style.display='flex';
+    msg.innerHTML='<span style="color:#C0392B;">⚠️ '+txt+'</span>';
   }
   chk();
 }
