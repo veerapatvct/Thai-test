@@ -616,7 +616,6 @@ await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-u
 }catch(e){console.warn('Could not save to server:',e)}
 finally{saving.classList.remove('visible');redirectToResult(tot,pct,ls,rs,gs);}
 }
-}
 
 function renderResults(){
 const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
