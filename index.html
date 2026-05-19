@@ -568,19 +568,9 @@ const ls=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='L').reduce((s,q)=>s+(
 const rs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 const gs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='G').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 let lv,cl;
-  if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary'}
-  else if(pct>=70){lv='Beginner Mid-High';cl='Class B2 — Upper Beginner'}
-  else if(pct>=55){lv='Beginner Mid';cl='Class B1 — Core Beginner'}
-  else if(pct>=35){lv='Beginner Low-Mid';cl='Class A2 — Early Beginner'}
-  else{lv='Beginner Low';cl='Class A1 — Absolute Starter'}
-  if(pct>=70){lv='Thai Communication 3';cl='Pre-Intermediate — Workplace Thai'}
-  else if(pct>=40){lv='Thai Communication 2';cl='Elementary — Daily Communication'}
-  else{lv='Thai Communication 1';cl='Complete Beginner — Survival Thai'}
-if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary'}
-else if(pct>=70){lv='Beginner Mid-High';cl='Class B2 — Upper Beginner'}
-else if(pct>=55){lv='Beginner Mid';cl='Class B1 — Core Beginner'}
-else if(pct>=35){lv='Beginner Low-Mid';cl='Class A2 — Early Beginner'}
-else{lv='Beginner Low';cl='Class A1 — Absolute Starter'}
+if(pct>=70){lv='Thai Communication 3';cl='Pre-Intermediate — Workplace Thai'}
+else if(pct>=40){lv='Thai Communication 2';cl='Elementary — Daily Communication'}
+else{lv='Thai Communication 1';cl='Complete Beginner — Survival Thai'}
 
 const ts=new Date(st.timestamp);
 const dateStr=ts.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
@@ -650,19 +640,9 @@ const rs=rqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 const gs=gqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 
 let lv,cl,dt;
-  if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary';dt='Strong foundation in Thai basics. Can move on to Elementary with a focus on conversations and daily Thai.'}
-  else if(pct>=70){lv='Beginner Mid-High';cl='Class B2 — Upper Beginner';dt='Good grasp of signs, numbers and common phrases. Recommended to build more dialogue skills.'}
-  else if(pct>=55){lv='Beginner Mid';cl='Class B1 — Core Beginner';dt='Understands basic signs and some phrases. Needs focused practice with vocabulary and numbers.'}
-  else if(pct>=35){lv='Beginner Low-Mid';cl='Class A2 — Early Beginner';dt='Recognizes some Thai words. Start with structured beginner classes covering alphabet and survival phrases.'}
-  else{lv='Beginner Low';cl='Class A1 — Absolute Starter';dt='Just starting out. Begin with Thai alphabet (44 consonants), tone marks, and essential survival vocabulary.'}
-  if(pct>=70){lv='Thai Communication 3';cl='Pre-Intermediate — Workplace Thai';dt='Strong foundation in Thai. This level focuses on workplace communication, expressing opinions, reading Thai texts, and understanding Thai cultural norms in business settings. Students scoring 70%+ may also qualify for TC4 — please verify with teacher.'}
-  else if(pct>=40){lv='Thai Communication 2';cl='Elementary — Daily Communication';dt='Has basic Thai knowledge. This level builds functional communication — ordering food, asking directions, simple conversations, basic sentence structure, and introductory workplace vocabulary.'}
-  else{lv='Thai Communication 1';cl='Complete Beginner — Survival Thai';dt='Starting from the basics. This level covers Thai alphabet and tone marks, greetings, numbers and time, reading signs and labels, survival vocabulary for food, transport, and common places.'}
-if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary';dt='Strong foundation in Thai basics. Can move on to Elementary with a focus on conversations and daily Thai.'}
-else if(pct>=70){lv='Beginner Mid-High';cl='Class B2 — Upper Beginner';dt='Good grasp of signs, numbers and common phrases. Recommended to build more dialogue skills.'}
-else if(pct>=55){lv='Beginner Mid';cl='Class B1 — Core Beginner';dt='Understands basic signs and some phrases. Needs focused practice with vocabulary and numbers.'}
-else if(pct>=35){lv='Beginner Low-Mid';cl='Class A2 — Early Beginner';dt='Recognizes some Thai words. Start with structured beginner classes covering alphabet and survival phrases.'}
-else{lv='Beginner Low';cl='Class A1 — Absolute Starter';dt='Just starting out. Begin with Thai alphabet (44 consonants), tone marks, and essential survival vocabulary.'}
+if(pct>=70){lv='Thai Communication 3';cl='Pre-Intermediate — Workplace Thai';dt='Strong foundation in Thai. This level focuses on workplace communication, expressing opinions, reading Thai texts, and understanding Thai cultural norms in business settings.'}
+else if(pct>=40){lv='Thai Communication 2';cl='Elementary — Daily Communication';dt='Has basic Thai knowledge. This level builds functional communication — ordering food, asking directions, simple conversations, basic sentence structure, and introductory workplace vocabulary.'}
+else{lv='Thai Communication 1';cl='Complete Beginner — Survival Thai';dt='Starting from the basics. This level covers Thai alphabet and tone marks, greetings, numbers and time, reading signs and labels, survival vocabulary for food, transport, and common places.'}
 
 const subs={};
 allQs.forEach((q,i)=>{const k=q.s+'|'+q.sub;if(!subs[k])subs[k]={l:q.sub,s:q.s,sn:q.sn,c:0,t:0};subs[k].t++;if(st.ans[i]===correctAns(i))subs[k].c++});
@@ -724,11 +704,9 @@ const ls=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='L').reduce((sum,q)=>s
 const rs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='R').reduce((sum,q)=>sum+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 const gs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='G').reduce((sum,q)=>sum+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
 let lv;
-if(pct>=85)lv='Beginner High — Ready for Elementary';
-else if(pct>=70)lv='Beginner Mid-High — Upper Beginner';
-else if(pct>=55)lv='Beginner Mid — Core Beginner';
-else if(pct>=35)lv='Beginner Low-Mid — Early Beginner';
-else lv='Beginner Low — Absolute Starter';
+if(pct>=70)lv='Thai Communication 3 — Pre-Intermediate';
+else if(pct>=40)lv='Thai Communication 2 — Elementary';
+else lv='Thai Communication 1 — Complete Beginner';
 const txt=`THAI PLACEMENT TEST RESULT\n${'─'.repeat(32)}\nName:         ${st.name}\nEmployee ID:  ${st.empId}\nWork Email:   ${st.email}\nDepartment:   ${st.dept}\nDate:         ${new Date().toLocaleDateString('en-GB')}\n\nTotal Score:  ${tot}\nPercentage:   ${pct}%\nListening:    ${ls}/20\nReading:      ${rs}/20\nGrammar:      ${gs}/20\n\nPlacement:    ${lv}\n${'─'.repeat(32)}\nDelta Electronics (Thailand) — Thai Language Program`;
 navigator.clipboard.writeText(txt).then(()=>toast('Result copied to clipboard ✓')).catch(()=>toast('Could not copy — use Print instead'));
 }
