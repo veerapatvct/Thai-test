@@ -614,7 +614,8 @@ fd.append('placement_level',lv);
 fd.append('class_recommendation',cl);
 await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(fd).toString()});
 }catch(e){console.warn('Could not save to server:',e)}
-finally{saving.classList.remove('visible');redirectToResult(tot,pct,ls,rs,gs);}}
+finally{saving.classList.remove('visible');redirectToResult(tot,pct,ls,rs,gs);}
+}
 }
 
 function renderResults(){
