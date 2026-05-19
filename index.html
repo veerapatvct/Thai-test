@@ -61,7 +61,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:
 @media(max-width:480px){.form-grid{grid-template-columns:1fr}}
 .fgroup label{font-size:12px;font-weight:500;color:var(--text3);display:block;margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase}
 .fgroup input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:15px;font-family:var(--font);font-weight:300;background:var(--bg);color:var(--text);outline:none;transition:all .2s}
-.fgroup input:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(0,112,201,0.08)}
+.fgroup input.error{border-color:#C0392B;background:#FEF2F2;}
+.fgroup input.error:focus{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,0.1);}
+.fgroup input.valid{border-color:#2E7D32;background:#F0FDF4;}
+.fgroup input.valid:focus{border-color:#2E7D32;box-shadow:0 0 0 3px rgba(46,125,50,0.08);}
 .fgroup input::placeholder{color:var(--text3)}
 .btn-start{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font);margin-top:4px;transition:all .2s;letter-spacing:0.01em;box-shadow:0 4px 14px rgba(0,112,201,0.25)}
 .btn-start:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(0,112,201,0.35)}
@@ -348,7 +351,7 @@ app.innerHTML=`
 <div class="form-grid">
   <div class="fgroup"><label>Full name *</label><input id="f-name" placeholder="e.g. John Smith" oninput="chk()"></div>
   <div class="fgroup"><label>Employee ID *</label><input id="f-id" placeholder="e.g. 123456" inputmode="numeric" pattern="[0-9]*" maxlength="10" oninput="this.value=this.value.replace(/\\D/g,'');chk()"></div>
-  <div class="fgroup" style="grid-column:1/-1"><label>Work Email *</label><input id="f-email" type="email" placeholder="name@deltaww.com" oninput="validateEmail()"></div>
+  <div class="fgroup" style="grid-column:1/-1"><label>Work Email *</label><input id="f-email" type="email" placeholder="name@deltaww.com" oninput="validateEmail()"><div id="email-error" style="display:none;margin-top:6px;font-size:12.5px;color:#C0392B;display:flex;align-items:center;gap:5px"><span>⚠️</span><span id="email-error-msg"></span></div><div id="email-hint" style="margin-top:5px;font-size:12px;color:var(--text3)">Must be a @deltaww.com address</div></div>
 </div>
 <div class="fgroup"><label>Department (optional)</label><input id="f-dept" placeholder="e.g. Engineering" style="margin-bottom:0"></div>
 <button class="q-audio" style="width:100%;justify-content:center;margin:18px 0 10px" onclick="playSampleAudio()">
@@ -360,8 +363,40 @@ app.innerHTML=`
 }
 
 function validateEmail(){
-const email=document.getElementById('f-email');
-email.value=email.value.replace(/\s/g,'');
+const input=document.getElementById('f-email');
+const errorDiv=document.getElementById('email-error');
+const errorMsg=document.getElementById('email-error-msg');
+const hint=document.getElementById('email-hint');
+const val=input.value.replace(/\s/g,'');
+input.value=val;
+
+if(val.length===0){
+  input.classList.remove('error','valid');
+  errorDiv.style.display='none';
+  hint.style.display='block';
+  chk();return;
+}
+
+const validEmail=/^[^\s@]+@deltaww\.com$/i.test(val);
+
+if(validEmail){
+  input.classList.remove('error');input.classList.add('valid');
+  errorDiv.style.display='none';
+  hint.style.display='none';
+}else{
+  input.classList.remove('valid');input.classList.add('error');
+  hint.style.display='none';
+  errorDiv.style.display='flex';
+  // Smart error message
+  if(!val.includes('@')){
+    errorMsg.textContent='Missing @ — should be name@deltaww.com';
+  } else {
+    const domain=val.split('@')[1]||'';
+    if(domain===''){ errorMsg.textContent='Please enter a domain after @'; }
+    else if(!domain.toLowerCase().includes('deltaww')){ errorMsg.textContent=`"@${domain}" is not a Delta email — use @deltaww.com`; }
+    else{ errorMsg.textContent='Email must end with @deltaww.com'; }
+  }
+}
 chk();
 }
 
