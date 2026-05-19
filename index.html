@@ -364,41 +364,48 @@ app.innerHTML=`
 }
 
 function validateEmail(){
-const input=document.getElementById('f-email');
-const errorDiv=document.getElementById('email-error');
-const errorMsg=document.getElementById('email-error-msg');
-const hint=document.getElementById('email-hint');
-const val=input.value.replace(/\s/g,'');
-input.value=val;
+  const input=document.getElementById('f-email');
+  if(!input)return;
+  const val=input.value.replace(/\s/g,'');
+  input.value=val;
 
-if(val.length===0){
-  input.classList.remove('error','valid');
-  errorDiv.style.display='none';
-  hint.style.display='block';
-  chk();return;
-}
+  const errorDiv=document.getElementById('email-error');
+  const errorMsg=document.getElementById('email-error-msg');
+  const hint=document.getElementById('email-hint');
 
-const validEmail=/^[^\s@]+@deltaww\.com$/i.test(val);
+  if(!errorDiv||!errorMsg||!hint){chk();return;}
 
-if(validEmail){
-  input.classList.remove('error');input.classList.add('valid');
-  errorDiv.style.display='none';
-  hint.style.display='none';
-}else{
-  input.classList.remove('valid');input.classList.add('error');
-  hint.style.display='none';
-  errorDiv.style.display='flex';
-  // Smart error message
-  if(!val.includes('@')){
-    errorMsg.textContent='Missing @ — should be name@deltaww.com';
-  } else {
-    const domain=val.split('@')[1]||'';
-    if(domain===''){ errorMsg.textContent='Please enter a domain after @'; }
-    else if(!domain.toLowerCase().includes('deltaww')){ errorMsg.textContent=`"@${domain}" is not a Delta email — use @deltaww.com`; }
-    else{ errorMsg.textContent='Email must end with @deltaww.com'; }
+  if(val.length===0){
+    input.className='';
+    errorDiv.style.display='none';
+    hint.style.display='block';
+    chk();return;
   }
-}
-chk();
+
+  const valid=/^[^\s@]+@deltaww\.com$/i.test(val);
+
+  if(valid){
+    input.classList.remove('error');
+    input.classList.add('valid');
+    errorDiv.style.display='none';
+    hint.style.display='none';
+  } else {
+    input.classList.remove('valid');
+    input.classList.add('error');
+    hint.style.display='none';
+    let msg='';
+    if(!val.includes('@')){
+      msg='Missing @ symbol — e.g. name@deltaww.com';
+    } else {
+      const domain=val.split('@')[1]||'';
+      if(!domain) msg='Please enter your full Delta email';
+      else if(!/deltaww\.com$/i.test(domain)) msg='"@'+domain+'" is not valid — must be @deltaww.com';
+      else msg='Email must end with @deltaww.com';
+    }
+    errorMsg.textContent=msg;
+    errorDiv.style.display='flex';
+  }
+  chk();
 }
 
 function chk(){
