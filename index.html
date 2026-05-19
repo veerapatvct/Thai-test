@@ -525,9 +525,23 @@ if(timerInterval)clearInterval(timerInterval);
 st.done=true;
 st.timestamp=new Date().toISOString();
 saveResult();
-st.phase='results';
-render();
-window.scrollTo(0,0);
+}
+
+function redirectToResult(tot,pct,ls,rs,gs){
+const ts=new Date(st.timestamp);
+const dateStr=ts.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+const params=new URLSearchParams({
+  name:st.name,
+  id:st.empId,
+  dept:st.dept,
+  score:tot,
+  pct:pct,
+  ls:`${ls}/20`,
+  rs:`${rs}/20`,
+  gs:`${gs}/20`,
+  date:dateStr
+});
+window.location.href='thai-placement-result.html?'+params.toString();
 }
 
 async function saveResult(){
@@ -600,7 +614,7 @@ fd.append('placement_level',lv);
 fd.append('class_recommendation',cl);
 await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(fd).toString()});
 }catch(e){console.warn('Could not save to server:',e)}
-finally{saving.classList.remove('visible')}
+finally{saving.classList.remove('visible');redirectToResult(tot,pct,ls,rs,gs);}}
 }
 
 function renderResults(){

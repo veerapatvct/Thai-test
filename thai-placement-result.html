@@ -637,10 +637,18 @@
 </div>
 
 <script>
+// Read from URL params (passed from index.html after test submission)
+const params = new URLSearchParams(window.location.search);
 const userResult = {
-  name: "John Smith",
-  score: 39,
-  percentage: 65
+  name: params.get('name') || 'Employee',
+  score: parseInt(params.get('score')) || 0,
+  percentage: parseInt(params.get('pct')) || 0,
+  listening: params.get('ls') || '0/20',
+  reading: params.get('rs') || '0/20',
+  grammar: params.get('gs') || '0/20',
+  empId: params.get('id') || '',
+  dept: params.get('dept') || '',
+  date: params.get('date') || new Date().toLocaleDateString('en-GB')
 };
 
 const levels = [
@@ -725,11 +733,27 @@ function makeSFMItems(items, cardId) {
 }
 
 function init() {
-  const { name, score, percentage } = userResult;
+  const { name, score, percentage, listening, reading, grammar, empId, dept, date } = userResult;
   const level = getLevelByScore(score);
+
+  // If no score in URL, show error
+  if (!new URLSearchParams(window.location.search).get('score')) {
+    document.getElementById('greeting-line').innerHTML = '<span style="color:#E53E3E">⚠️ No result data found. Please complete the placement test first.</span>';
+  }
 
   // Header
   document.getElementById('user-name-header').textContent = name;
+  // Show employee details under name
+  const sub = [];
+  if (empId) sub.push(`ID: ${empId}`);
+  if (dept && dept !== '—') sub.push(dept);
+  if (date) sub.push(date);
+  if (sub.length) {
+    const p = document.createElement('p');
+    p.style.cssText = 'font-size:13px;color:#94A3B8;margin-top:4px';
+    p.textContent = sub.join(' · ');
+    document.querySelector('.page-header').appendChild(p);
+  }
 
   // Hero
   document.getElementById('hero-avatar').src = level.image;
