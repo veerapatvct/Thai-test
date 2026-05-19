@@ -202,22 +202,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:
 <div class="toast" id="toast"></div>
 <div class="saving" id="saving"><div class="saving-spinner"></div><p>Saving your result…</p></div>
 
-<!-- Netlify hidden form for form detection -->
-<form name="thai-placement-results" netlify netlify-honeypot="bot-field" hidden>
-<input type="text" name="bot-field">
-<input type="text" name="name">
-<input type="text" name="employee_id">
-<input type="text" name="department">
-<input type="text" name="work_email">
-<input type="text" name="date">
-<input type="text" name="total_score">
-<input type="text" name="percentage">
-<input type="text" name="listening_score">
-<input type="text" name="reading_score">
-<input type="text" name="grammar_score">
-<input type="text" name="placement_level">
-<input type="text" name="class_recommendation">
-</form>
+
 
 <script>
 const Q=[
@@ -627,23 +612,28 @@ localStorage.setItem('thai_test_results',JSON.stringify(existing));
 const saving=document.getElementById('saving');
 saving.classList.add('visible');
 try{
-const fd=new FormData();
-fd.append('form-name','thai-placement-results');
-fd.append('bot-field','');
-fd.append('name',st.name);
-fd.append('employee_id',st.empId);
-fd.append('department',st.dept);
-fd.append('work_email',st.email);
-fd.append('date',`${dateStr} ${timeStr}`);
-fd.append('total_score',tot);
-fd.append('percentage',`${pct}%`);
-fd.append('listening_score',`${ls}/20`);
-fd.append('reading_score',`${rs}/20`);
-fd.append('grammar_score',`${gs}/20`);
-fd.append('placement_level',lv);
-fd.append('class_recommendation',cl);
-await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(fd).toString()});
-}catch(e){console.warn('Could not save to server:',e)}
+const PA_URL='https://default19f2582317ff421fad4e8fed035aed.da.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5c5f759c6c054bc4b0b2da61ef7b19f0/triggers/manual/paths/invoke?api-version=1';
+const payload={
+  name:st.name,
+  employee_id:st.empId,
+  department:st.dept,
+  work_email:st.email,
+  date:dateStr,
+  time:timeStr,
+  total_score:tot,
+  percentage:pct,
+  listening_score:`${ls}/20`,
+  reading_score:`${rs}/20`,
+  grammar_score:`${gs}/20`,
+  placement_level:lv,
+  class_recommendation:cl
+};
+await fetch(PA_URL,{
+  method:'POST',
+  headers:{'Content-Type':'application/json','x-api-key':'delta-thai-2026'},
+  body:JSON.stringify(payload)
+});
+}catch(e){console.warn('Could not save to Power Automate:',e)}
 finally{saving.classList.remove('visible');redirectToResult(tot,pct,ls,rs,gs);}
 }
 
