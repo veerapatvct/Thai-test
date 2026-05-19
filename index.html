@@ -3,701 +3,304 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Delta Thai Placement Test</title>
+<title>Delta Thai Placement Assessment</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
---bg:#F5F3EE;
+--bg:#F4F8FB;
 --card:#FFFFFF;
---border:#DDD9D0;
---border-focus:#B8A88A;
---text:#1A1814;
---text2:#5C5750;
---text3:#9B9590;
---gold:#8B6914;
---gold-bg:#FBF5E6;
---gold-light:#F5E9C8;
---gold-dark:#5C4409;
---teal:#0D6B5C;
---teal-bg:#E3F5F1;
---teal-dark:#094A3F;
---red:#C0392B;
---red-bg:#FBEAE9;
+--border:#D6E2EC;
+--border-focus:#0070C9;
+--text:#1E2A36;
+--text2:#4E6478;
+--text3:#7F95A8;
+--primary:#0070C9;
+--primary-dark:#005A9E;
+--primary-light:#E8F3FB;
+--secondary:#00A3E0;
 --green:#2E7D32;
 --green-bg:#E8F5E9;
---r:10px;--r-lg:16px;
+--red:#C0392B;
+--red-bg:#FBEAE9;
+--r:10px;
+--r-lg:16px;
 --font:'Prompt',sans-serif;
 --font-th:'Sarabun',sans-serif;
---shadow:0 2px 12px rgba(0,0,0,0.06);
+--shadow:0 2px 8px rgba(0,112,201,0.05);
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:1.6;min-height:100vh;font-weight:300}
-.wrap{max-width:680px;margin:0 auto;padding:24px 18px 100px}
-
-/* HERO */
-.hero{text-align:center;padding:52px 20px 44px;position:relative}
-.hero-logo{display:inline-flex;align-items:center;gap:10px;margin-bottom:20px}
-.hero-logo-icon{width:42px;height:42px;background:linear-gradient(135deg,var(--gold),#C9972A);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 12px rgba(139,105,20,0.3)}
-.hero-logo-text{text-align:left}
-.hero-logo-text .co{font-size:11px;font-weight:500;color:var(--text3);letter-spacing:0.08em;text-transform:uppercase}
-.hero-logo-text .prog{font-size:14px;font-weight:500;color:var(--text2)}
-.hero h1{font-size:32px;font-weight:600;letter-spacing:-0.03em;line-height:1.15;margin-bottom:10px}
-.hero h1 span{color:var(--gold)}
-.hero p{font-size:15px;color:var(--text2);max-width:400px;margin:0 auto 28px;font-weight:300;line-height:1.6}
-.hero-chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.chip{display:inline-flex;align-items:center;gap:5px;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:5px 14px;font-size:13px;color:var(--text2);font-weight:400}
-.chip .dot{width:7px;height:7px;border-radius:50%}
-
-/* FORM CARD */
-.card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px 28px;margin-bottom:16px;box-shadow:var(--shadow)}
-.card-title{font-size:15px;font-weight:500;color:var(--text);margin-bottom:16px;display:flex;align-items:center;gap:8px}
-.card-title::before{content:'';width:3px;height:16px;background:var(--gold);border-radius:2px;flex-shrink:0}
-.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
-@media(max-width:480px){.form-grid{grid-template-columns:1fr}}
-.fgroup label{font-size:12px;font-weight:500;color:var(--text3);display:block;margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase}
-.fgroup input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:15px;font-family:var(--font);font-weight:300;background:var(--bg);color:var(--text);outline:none;transition:all .2s}
-.fgroup input:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(139,105,20,0.08)}
-.fgroup input::placeholder{color:var(--text3)}
-.btn-start{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),#C9972A);color:#fff;border:none;border-radius:var(--r);font-size:15px;font-weight:500;cursor:pointer;font-family:var(--font);margin-top:4px;transition:all .2s;letter-spacing:0.01em;box-shadow:0 4px 14px rgba(139,105,20,0.3)}
-.btn-start:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(139,105,20,0.4)}
-.btn-start:disabled{background:#C8C3BC;box-shadow:none;cursor:default;transform:none}
-
-/* PROGRESS */
-.progress-bar{position:sticky;top:0;z-index:20;background:rgba(245,243,238,0.92);padding:14px 0 12px;border-bottom:1px solid var(--border);margin-bottom:28px;backdrop-filter:blur(10px)}
-.pb-inner{display:flex;align-items:center;gap:14px}
-.pb-track{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden}
-.pb-fill{height:100%;background:linear-gradient(90deg,var(--gold),#C9972A);border-radius:3px;transition:width .5s ease}
-.pb-label{font-size:13px;color:var(--text2);min-width:90px;text-align:right;font-weight:400}
-
-/* SECTION */
-.section{margin-bottom:36px}
-.section-head{display:flex;align-items:center;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:1.5px solid var(--border)}
-.section-badge{width:36px;height:36px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
-.section-title{font-size:18px;font-weight:500;flex:1}
-.section-count{font-size:13px;color:var(--text3)}
-
-/* SUBLEVEL */
-.sublevel{display:inline-block;font-size:11px;font-weight:500;padding:4px 14px;border-radius:20px;margin:14px 0 8px;letter-spacing:0.04em;text-transform:uppercase}
-
-/* Q CARD */
-.q-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r-lg);padding:20px 24px;margin-bottom:12px;transition:border-color .3s,box-shadow .3s}
-.q-card.answered{border-color:var(--gold-light);box-shadow:0 2px 8px rgba(139,105,20,0.08)}
-.q-num{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px}
-
-/* AUDIO BUTTON */
-.q-audio{display:inline-flex;align-items:center;gap:8px;padding:9px 18px;background:var(--bg);border:1.5px solid var(--border);border-radius:var(--r);font-size:13px;color:var(--text2);cursor:pointer;margin:4px 0 14px;transition:all .25s;font-family:var(--font);font-weight:400}
-.q-audio:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
-.q-audio.playing{border-color:var(--gold);color:var(--gold);background:var(--gold-bg)}
-.q-audio .play-icon{width:24px;height:24px;background:linear-gradient(135deg,var(--gold),#C9972A);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;color:#fff;flex-shrink:0;transition:all .2s}
-.q-audio .play-waves{display:flex;gap:2px;align-items:center}
-.wave{width:3px;background:var(--gold);border-radius:2px;animation:wave .8s ease-in-out infinite}
-.wave:nth-child(1){height:8px;animation-delay:0s}
-.wave:nth-child(2){height:14px;animation-delay:.15s}
-.wave:nth-child(3){height:10px;animation-delay:.3s}
-@keyframes wave{0%,100%{transform:scaleY(1)}50%{transform:scaleY(1.6)}}
-
-/* THAI TEXT */
-.q-thai{font-family:var(--font-th);font-size:22px;line-height:2;margin-bottom:4px;color:var(--text);font-weight:500}
-.q-phonetic{font-size:13px;color:var(--text3);margin-bottom:12px;font-style:italic;letter-spacing:0.01em}
-.q-text{font-size:15px;margin-bottom:14px;color:var(--text);font-weight:400;line-height:1.5}
-
-/* OPTIONS */
-.opts{display:flex;flex-direction:column;gap:7px}
-.opt{display:flex;align-items:center;gap:12px;padding:11px 16px;border:1.5px solid var(--border);border-radius:var(--r);cursor:pointer;font-size:14px;color:var(--text);background:transparent;text-align:left;width:100%;font-family:var(--font);font-weight:300;transition:all .2s;line-height:1.4}
-.opt:hover:not([disabled]){border-color:var(--border-focus);background:var(--gold-bg)}
-.opt.selected{border-color:var(--gold);background:var(--gold-bg);color:var(--gold-dark)}
-.opt.correct{border-color:var(--green);background:var(--green-bg);color:var(--green)}
-.opt.wrong{border-color:var(--red);background:var(--red-bg);color:var(--red)}
-.opt[disabled]{cursor:default}
-.radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .2s}
-.opt.selected .radio{border-color:var(--gold);background:var(--gold)}
-.opt.selected .radio::after{content:'✓';font-size:10px;color:#fff;font-weight:600}
-.opt.correct .radio{border-color:var(--green);background:var(--green)}
-.opt.correct .radio::after{content:'✓';font-size:10px;color:#fff;font-weight:600}
-.opt.wrong .radio{border-color:var(--red);background:var(--red)}
-.opt.wrong .radio::after{content:'✗';font-size:10px;color:#fff;font-weight:600}
-
-/* SUBMIT */
-.submit-row{text-align:center;padding:32px 0 16px}
-.btn-submit{padding:15px 52px;background:linear-gradient(135deg,var(--teal),#12957E);color:#fff;border:none;border-radius:var(--r);font-size:16px;font-weight:500;cursor:pointer;font-family:var(--font);transition:all .25s;box-shadow:0 4px 14px rgba(13,107,92,0.3)}
-.btn-submit:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(13,107,92,0.4)}
-.btn-submit:disabled{background:#C8C3BC;box-shadow:none;cursor:default;transform:none}
-.submit-hint{font-size:13px;color:var(--text3);margin-top:10px}
-
-/* RESULTS */
-.result-hero{text-align:center;padding:44px 20px 32px;border-bottom:1.5px solid var(--border);margin-bottom:28px}
-.result-hero h2{font-size:26px;font-weight:600;letter-spacing:-0.02em;margin-bottom:6px}
-.result-hero .info{font-size:14px;color:var(--text2)}
-.result-hero .date{font-size:12px;color:var(--text3);margin-top:4px}
-
-.score-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
-@media(max-width:480px){.score-row{grid-template-columns:1fr 1fr}}
-.sc-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 12px;text-align:center;box-shadow:var(--shadow)}
-.sc-label{font-size:11px;color:var(--text3);font-weight:500;letter-spacing:0.04em;text-transform:uppercase;margin-bottom:6px}
-.sc-val{font-size:24px;font-weight:600}
-
-.placement{background:linear-gradient(135deg,var(--gold-bg),#FEF9ED);border:2px solid var(--gold-light);border-radius:var(--r-lg);padding:28px;text-align:center;margin-bottom:20px;position:relative;overflow:hidden}
-.placement::before{content:'';position:absolute;top:-30px;right:-30px;width:120px;height:120px;background:radial-gradient(circle,rgba(201,151,42,0.12),transparent);border-radius:50%}
-.placement .lv-tag{font-size:11px;font-weight:500;color:var(--gold);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:8px}
-.placement .lv-name{font-size:28px;font-weight:600;letter-spacing:-0.02em;margin-bottom:6px}
-.placement .class-rec{font-size:16px;color:var(--text2);font-weight:400;margin-bottom:10px}
-.placement .lv-desc{font-size:13px;color:var(--text3);line-height:1.6;max-width:400px;margin:0 auto}
-
-.breakdown{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow)}
-.breakdown h3{font-size:14px;font-weight:500;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.breakdown h3::before{content:'';width:3px;height:14px;background:var(--gold);border-radius:2px;flex-shrink:0}
-.bd-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border);font-size:14px}
-.bd-row:last-child{border:none}
-.bd-lbl{flex:1;color:var(--text2);font-weight:300}
-.bd-track{width:100px;height:6px;background:var(--border);border-radius:3px;overflow:hidden;flex-shrink:0}
-.bd-fill{height:100%;border-radius:3px}
-.bd-score{font-weight:500;min-width:60px;text-align:right;font-size:13px}
-
-.wrong-box{background:var(--card);border:1px solid var(--border);border-radius:var(--r-lg);padding:22px 26px;margin-bottom:16px;box-shadow:var(--shadow)}
-.wrong-box h3{font-size:14px;font-weight:500;margin-bottom:14px;display:flex;align-items:center;gap:8px}
-.wrong-box h3::before{content:'';width:3px;height:14px;background:var(--red);border-radius:2px;flex-shrink:0}
-.wi{padding:10px 0;border-bottom:1px solid var(--border);font-size:13px;line-height:1.7}
-.wi:last-child{border:none}
-
-.actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;padding:24px 0}
-.btn-action{padding:11px 22px;border:1.5px solid var(--border);border-radius:var(--r);font-size:14px;font-weight:400;cursor:pointer;background:var(--card);color:var(--text);font-family:var(--font);transition:all .2s;box-shadow:var(--shadow)}
-.btn-action:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-1px)}
-
-.footer{text-align:center;padding:24px 0;font-size:12px;color:var(--text3);border-top:1px solid var(--border);margin-top:8px;line-height:1.8}
-
-/* Toast */
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:#1A1814;color:#fff;padding:12px 24px;border-radius:var(--r);font-size:14px;font-weight:400;opacity:0;transition:all .3s;z-index:100;pointer-events:none;white-space:nowrap}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-
-/* Saving overlay */
-.saving{display:none;position:fixed;inset:0;background:rgba(245,243,238,0.85);z-index:50;align-items:center;justify-content:center;flex-direction:column;gap:14px;backdrop-filter:blur(4px)}
-.saving.visible{display:flex}
-.saving-spinner{width:40px;height:40px;border:3px solid var(--border);border-top-color:var(--gold);border-radius:50%;animation:spin .7s linear infinite}
-@keyframes spin{to{transform:rotate(360deg)}}
-.saving p{font-size:15px;color:var(--text2)}
-
-@media print{.progress-bar,.q-audio,.submit-row,.actions{display:none!important}.q-card,.card,.breakdown,.sc-card,.placement{break-inside:avoid}}
-
-/* TIMER */
-.timer-wrap{display:flex;align-items:center;gap:8px;background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:6px 14px;font-size:14px;font-weight:500;color:var(--text2)}
-.timer-wrap.warning{border-color:var(--gold);background:var(--gold-bg);color:var(--gold-dark)}
-.timer-wrap.danger{border-color:var(--red);background:var(--red-bg);color:var(--red);animation:pulse 1s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
-.timer-dot{width:8px;height:8px;border-radius:50%;background:var(--green);flex-shrink:0}
-.timer-wrap.warning .timer-dot{background:var(--gold)}
-.timer-wrap.danger .timer-dot{background:var(--red)}
+body{
+background:var(--bg);
+font-family:var(--font);
+color:var(--text);
+padding:24px;
+}
+.wrap{
+max-width:720px;
+margin:auto;
+}
+.hero{
+text-align:center;
+padding:40px 20px;
+}
+.hero-logo{
+width:70px;
+height:70px;
+margin:auto;
+border-radius:18px;
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:32px;
+margin-bottom:18px;
+color:white;
+}
+.hero h1{
+font-size:34px;
+margin-bottom:10px;
+}
+.hero p{
+color:var(--text2);
+font-size:15px;
+}
+.card{
+background:var(--card);
+border:1px solid var(--border);
+border-radius:var(--r-lg);
+padding:28px;
+box-shadow:var(--shadow);
+}
+.card-title{
+font-size:18px;
+font-weight:600;
+margin-bottom:20px;
+color:var(--primary-dark);
+}
+.form-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:16px;
+}
+@media(max-width:640px){
+.form-grid{grid-template-columns:1fr}
+}
+.fgroup label{
+display:block;
+font-size:12px;
+font-weight:600;
+margin-bottom:8px;
+color:var(--text3);
+text-transform:uppercase;
+}
+.fgroup input{
+width:100%;
+padding:13px 14px;
+border:1.5px solid var(--border);
+border-radius:var(--r);
+font-size:15px;
+outline:none;
+transition:.2s;
+}
+.fgroup input:focus{
+border-color:var(--primary);
+box-shadow:0 0 0 4px rgba(0,112,201,0.1);
+}
+.audio-box{
+margin-top:24px;
+background:var(--primary-light);
+border:1px solid #B7D8F5;
+border-radius:var(--r);
+padding:14px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+}
+.audio-btn{
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+border:none;
+padding:12px 18px;
+border-radius:var(--r);
+font-weight:500;
+cursor:pointer;
+}
+.audio-btn:hover{
+opacity:.92;
+}
+.btn-start{
+margin-top:24px;
+width:100%;
+padding:15px;
+border:none;
+border-radius:var(--r);
+background:linear-gradient(135deg,var(--primary),var(--secondary));
+color:white;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+}
+.btn-start:disabled{
+background:#B8C4CE;
+cursor:not-allowed;
+}
+.preview-box{
+margin-top:30px;
+background:white;
+border:1px solid var(--border);
+border-radius:var(--r-lg);
+padding:24px;
+}
+.preview-question{
+margin-top:16px;
+}
+.option{
+padding:12px;
+border:1px solid var(--border);
+border-radius:10px;
+margin-top:10px;
+cursor:pointer;
+}
+.option:hover{
+background:var(--primary-light);
+border-color:var(--primary);
+}
+.footer-note{
+margin-top:18px;
+font-size:13px;
+color:var(--text3);
+text-align:center;
+}
 </style>
 </head>
 <body>
-<div class="wrap" id="app"></div>
-<div class="toast" id="toast"></div>
-<div class="saving" id="saving"><div class="saving-spinner"></div><p>Saving your result…</p></div>
+<div class="wrap">
 
-<!-- Netlify hidden form for form detection -->
-<form name="thai-placement-results" netlify netlify-honeypot="bot-field" hidden>
-<input type="text" name="bot-field">
-<input type="text" name="name">
-<input type="text" name="employee_id">
-<input type="text" name="department">
-<input type="text" name="date">
-<input type="text" name="total_score">
-<input type="text" name="percentage">
-<input type="text" name="listening_score">
-<input type="text" name="reading_score">
-<input type="text" name="placement_level">
-<input type="text" name="class_recommendation">
-</form>
+<div class="hero">
+  <div class="hero-logo">🇹🇭</div>
+  <h1>Delta Thai Language Placement Assessment</h1>
+  <p>Thai communication assessment for Delta expatriate employees</p>
+</div>
+
+<div class="card">
+  <div class="card-title">Your Information</div>
+
+  <div class="form-grid">
+
+    <div class="fgroup">
+      <label>Full Name *</label>
+      <input id="f-name" type="text" placeholder="e.g. John Smith" oninput="chk()">
+    </div>
+
+    <div class="fgroup">
+      <label>Employee ID *</label>
+      <input
+        id="f-id"
+        type="text"
+        placeholder="e.g. 123456"
+        inputmode="numeric"
+        maxlength="10"
+        oninput="this.value=this.value.replace(/\D/g,'');chk()"
+      >
+    </div>
+
+    <div class="fgroup" style="grid-column:1/-1">
+      <label>Work Email *</label>
+      <input
+        id="f-email"
+        type="email"
+        placeholder="name@deltaww.com"
+        oninput="validateEmail()"
+      >
+    </div>
+
+  </div>
+
+  <div class="audio-box">
+    <div>
+      <div style="font-weight:600">🔊 Test Audio Before Starting</div>
+      <div style="font-size:13px;color:var(--text2)">Please confirm that you can hear Thai audio clearly.</div>
+    </div>
+
+    <button class="audio-btn" onclick="playSampleAudio()">
+      ▶ Play Test Sound
+    </button>
+  </div>
+
+  <button class="btn-start" id="btn-start" disabled>
+    Start Assessment →
+  </button>
+
+  <div class="footer-note">
+    60 Questions • Listening • Reading • Grammar • 1 Hour
+  </div>
+</div>
+
+<div class="preview-box">
+  <div style="font-size:18px;font-weight:600;color:var(--primary-dark)">
+    Preview Question Design
+  </div>
+
+  <div class="preview-question">
+    <div style="font-size:12px;color:var(--text3);margin-bottom:8px">
+      Q1 • Listening
+    </div>
+
+    <button class="audio-btn" onclick="playQuestionAudio()">
+      ▶ Play Audio
+    </button>
+
+    <div style="margin-top:18px;font-size:16px;font-weight:500">
+      What did the speaker say?
+    </div>
+
+    <div class="option">Hello / Good day</div>
+    <div class="option">Goodbye</div>
+    <div class="option">Thank you</div>
+    <div class="option">I'm sorry</div>
+  </div>
+</div>
+
+</div>
 
 <script>
-const Q=[
-// LISTENING (20 questions across 4 sub-levels)
-{s:"L",sub:"Basic words",sn:1,th:"สวัสดี",ph:"Sà-wàt-dee",q:"What did the speaker say?",o:["Hello / Good day","Goodbye","Thank you","I'm sorry"],a:0},
-{s:"L",sub:"Basic words",sn:1,th:"ขอบคุณ",ph:"Khòp-khun",q:"What did the speaker say?",o:["I'm sorry","Please","Thank you","Excuse me"],a:2},
-{s:"L",sub:"Basic words",sn:1,th:"ใช่",ph:"Châi",q:"The speaker is saying:",o:["No","Yes","Maybe","I don't know"],a:1},
-{s:"L",sub:"Basic words",sn:1,th:"ไม่เป็นไร",ph:"Mâi pen rai",q:"What does this mean?",o:["I'm sorry","Never mind / It's okay","See you tomorrow","Please help me"],a:1},
-{s:"L",sub:"Numbers & time",sn:2,th:"สิบบาท",ph:"Sìp bàat",q:"How much is it?",o:["1 baht","5 baht","10 baht","100 baht"],a:2},
-{s:"L",sub:"Numbers & time",sn:2,th:"สามร้อยบาท",ph:"Sǎam róoi bàat",q:"How much is it?",o:["30 baht","300 baht","3,000 baht","3 baht"],a:1},
-{s:"L",sub:"Numbers & time",sn:2,th:"เก้าโมงเช้า",ph:"Gâo moong cháo",q:"What time is it?",o:["8 AM","9 AM","9 PM","10 AM"],a:1},
-{s:"L",sub:"Numbers & time",sn:2,th:"วันจันทร์",ph:"Wan jan",q:"What day is it?",o:["Sunday","Monday","Tuesday","Saturday"],a:1},
-{s:"L",sub:"Daily phrases",sn:3,th:"ไปไหน",ph:"Pai nǎi",q:"What is the speaker asking?",o:["What is this?","Where are you going?","How much is it?","Who are you?"],a:1},
-{s:"L",sub:"Daily phrases",sn:3,th:"อร่อยมาก",ph:"A-ròi mâak",q:"What is the speaker saying about the food?",o:["Very expensive","Very spicy","Very delicious","Very little"],a:2},
-{s:"L",sub:"Daily phrases",sn:3,th:"ช่วยด้วย",ph:"Chûay dûay",q:"What does the speaker need?",o:["Water","Help","The bill","Directions"],a:1},
-{s:"L",sub:"Daily phrases",sn:3,th:"ผมไม่เข้าใจ",ph:"Phǒm mâi khâo jai",q:"The speaker is saying:",o:["I don't understand","I don't want it","I don't have money","I am not hungry"],a:0},
-{s:"L",sub:"Short sentences",sn:4,th:"สบายดี ขอบคุณ",ph:"Sa-baai dee khòp-khun",q:"What is the speaker saying?",o:["I am sick","I am tired","I am fine, thank you","I am very busy"],a:2},
-{s:"L",sub:"Short sentences",sn:4,th:"ราคาห้าสิบบาท",ph:"Raa-khaa hâa-sìp bàat",q:"What is the speaker telling you?",o:["It costs 15 baht","It costs 50 baht","It costs 500 baht","It costs 5 baht"],a:1},
-{s:"L",sub:"Short sentences",sn:4,th:"ห้องน้ำอยู่ชั้นสอง",ph:"Hông náam yòo chán sǒong",q:"Where is the restroom?",o:["Ground floor","2nd floor","3rd floor","Outside the building"],a:1},
-{s:"L",sub:"Short sentences",sn:4,th:"อยากได้น้ำส้มหนึ่งแก้ว",ph:"Yàak dâai náam sôm nùeng gâew",q:"What does the speaker want?",o:["A glass of water","A glass of iced tea","A glass of orange juice","A cup of coffee"],a:2},
-{s:"L",sub:"Short sentences",sn:4,th:"ชื่อของฉันคือจอห์น",ph:"Chûe khǒng chǎn khue John",q:"What is the speaker's name?",o:["James","John","Joe","Jack"],a:1},
-{s:"L",sub:"Short sentences",sn:4,th:"วันนี้อากาศร้อนมาก",ph:"Wan née aa-gàat rón mâak",q:"What does the speaker say about today's weather?",o:["It is raining heavily","It is very cold","It is very hot","It is very windy"],a:2},
-{s:"L",sub:"Short sentences",sn:4,th:"เดินทางไปทำงานโดยรถไฟฟ้า",ph:"Dern thaang pai tham ngaan dooi rót fai fáa",q:"How does the speaker get to work?",o:["By car","By motorcycle","By BTS Skytrain","By bus"],a:2},
-{s:"L",sub:"Short sentences",sn:4,th:"ร้านนี้เปิดตอนเก้าโมงเช้า",ph:"Ráan née pèrt dton gâo moong cháo",q:"What time does the shop open?",o:["8 AM","9 AM","10 AM","11 AM"],a:1},
-
-// READING (20 questions — very basic Thai with phonetics shown)
-{s:"R",sub:"Signs",sn:1,th:"ทางออก",ph:"Thaang òok",q:"This sign means:",o:["Entrance","Exit","Restroom","No entry"],a:1},
-{s:"R",sub:"Signs",sn:1,th:"ห้องน้ำ",ph:"Hông náam",q:"This sign means:",o:["Restaurant","Office","Restroom","Elevator"],a:2},
-{s:"R",sub:"Signs",sn:1,th:"เปิด",ph:"Pèrt",q:"This sign on a shop door means:",o:["Closed","Open","Busy","Reserved"],a:1},
-{s:"R",sub:"Signs",sn:1,th:"ห้ามสูบบุหรี่",ph:"Hâam sòop bù-rèe",q:"What does this sign say?",o:["No cameras","No smoking","No food","No parking"],a:1},
-{s:"R",sub:"Signs",sn:1,th:"ระวัง",ph:"Ra-wang",q:"This word means:",o:["Welcome","Information","Caution / Warning","Please wait"],a:2},
-{s:"R",sub:"Signs",sn:1,th:"ชั้น 3",ph:"Chán sǎam",q:"What does this label indicate?",o:["Room 3","3rd floor","Gate 3","Table 3"],a:1},
-{s:"R",sub:"Numbers & time",sn:2,th:"ราคาหนึ่งร้อยยี่สิบบาท",ph:"Raa-khaa nùeng-róoi-yêe-sìp bàat",q:"What is the price?",o:["12 baht","120 baht","1,200 baht","21 baht"],a:1},
-{s:"R",sub:"Numbers & time",sn:2,th:"เปิดเก้าโมงเช้าถึงสามทุ่ม",ph:"Pèrt gâo moong cháo thǔeng sǎam thûm",q:"What are the opening hours?",o:["8 AM to 9 PM","9 AM to 9 PM","9 AM to 10 PM","9 AM to 8 PM"],a:1},
-{s:"R",sub:"Numbers & time",sn:2,th:"ซื้อสองแถมหนึ่ง",ph:"Súe sǒong thǎem nùeng",q:"What is this promotion?",o:["Buy 1 get 1 free","Buy 2 get 1 free","50% off","Free delivery"],a:1},
-{s:"R",sub:"Numbers & time",sn:2,th:"ลดห้าสิบเปอร์เซ็นต์",ph:"Lót hâa-sìp per-sen",q:"What does this mean?",o:["50 baht off","50% discount","Buy 50 items","50 baht only"],a:1},
-{s:"R",sub:"Numbers & time",sn:2,th:"ตอนนี้เวลาบ่ายสามโมง",ph:"Dton-née way-laa bàai sǎam moong",q:"What time is it now?",o:["1 PM","2 PM","3 PM","4 PM"],a:2},
-{s:"R",sub:"Common words",sn:3,th:"ร้านอาหาร",ph:"Ráan aa-hǎan",q:"This word means:",o:["Supermarket","Pharmacy","Restaurant","Coffee shop"],a:2},
-{s:"R",sub:"Common words",sn:3,th:"โรงพยาบาล",ph:"Roong pha-yaa-baan",q:"This word means:",o:["Hotel","Airport","School","Hospital"],a:3},
-{s:"R",sub:"Common words",sn:3,th:"สนามบิน",ph:"Sa-nǎam bin",q:"This word means:",o:["Bus terminal","Train station","Airport","Seaport"],a:2},
-  {s:"R",sub:"Common words",sn:3,th:"วันหยุด",ph:"Wan yùt",q:"This word means:",o:["Work day","Morning","Day off","Weekend"],a:2},
-  {s:"R",sub:"Common words",sn:3,th:"ที่จอดรถ",ph:"Thêe jòt rót",q:"This word means:",o:["Taxi stand","Parking area","Bus stop","Road entrance"],a:1},
-  {s:"R",sub:"Short notices",sn:4,th:"วันหยุด",ph:"Wan yùt",q:"This word means:",o:["Work day","Morning","Day off","Weekend"],a:2},
-  {s:"R",sub:"Signs",sn:1,th:"ที่จอดรถ",ph:"Thêe jòt rót",q:"This word means:",o:["Taxi stand","Parking area","Bus stop","Road entrance"],a:1},
-{s:"R",sub:"Short notices",sn:4,th:"ปิดวันอาทิตย์",ph:"Pìt wan aa-thít",q:"When is this place closed?",o:["Monday","Saturday","Sunday","Every day"],a:2},
-{s:"R",sub:"Short notices",sn:4,th:"ห้ามถ่ายรูป",ph:"Hâam thàai rûup",q:"What does this sign prohibit?",o:["No smoking","No food or drinks","No photography","No mobile phones"],a:2},
-{s:"R",sub:"Short notices",sn:4,th:"กรุณารอสักครู่",ph:"Ga-ru-naa ror sàk-krûu",q:"What are you asked to do?",o:["Please come in","Please take a number","Please wait a moment","Please fill in the form"],a:2},
-{s:"R",sub:"Short notices",sn:4,th:"ห้ามเข้า เฉพาะเจ้าหน้าที่",ph:"Hâam khâo — chà-phór jâo-nâa-thêe",q:"Who can enter this area?",o:["Everyone","Customers only","Staff only","Members only"],a:2},
-
-// GRAMMAR (20 questions — fill in the blank with phonetics)
-{s:"G",sub:"Verbs",sn:1,th:"ฉัน .... กาแฟ",ph:"Chǎn .... gaa-fae",q:"Choose the correct word to fill in the blank:",o:["ดื่ม (dùem)","วิ่ง (wîng)","นอน (norn)","กิน (gin)"],a:0},
-{s:"G",sub:"Verbs",sn:1,th:"เขา .... ที่บ้าน",ph:"Khǎo .... thêe bâan",q:"Choose the correct word to fill in the blank:",o:["กิน (gin)","อยู่ (yòo)","ซื้อ (súe)","เปิด (pèrt)"],a:1},
-{s:"G",sub:"Verbs",sn:1,th:"ฉัน .... ข้าว",ph:"Chǎn .... khâao",q:"Choose the correct word to fill in the blank:",o:["ดื่ม (dùem)","กิน (gin)","นั่ง (nâng)","เดิน (dern)"],a:1},
-{s:"G",sub:"Verbs",sn:1,th:"เขา .... ภาษาไทย",ph:"Khǎo .... phaa-sǎa Thai",q:"Choose the correct word to fill in the blank:",o:["พูด (phûut)","กิน (gin)","นอน (norn)","วิ่ง (wîng)"],a:0},
-{s:"G",sub:"Verbs",sn:1,th:"เธอ .... เสื้อสีแดง",ph:"Ter .... sûea sǐi daeng",q:"Choose the correct word to fill in the blank:",o:["กิน (gin)","ดื่ม (dùem)","ใส่ (sài)","วิ่ง (wîng)"],a:2},
-{s:"G",sub:"Verbs",sn:1,th:"ฉัน .... เพื่อนที่โรงเรียน",ph:"Chǎn .... phûean thêe roong-rian",q:"Choose the correct word to fill in the blank:",o:["เจอ (jer)","กิน (gin)","นอน (norn)","ขาย (khǎai)"],a:0},
-{s:"G",sub:"Verbs",sn:1,th:"เขา .... เร็วมาก",ph:"Khǎo .... reo mâak",q:"Choose the correct word to fill in the blank:",o:["วิ่ง (wîng)","อยู่ (yòo)","โต๊ะ (dtó)","ที่นี่ (thêe nêe)"],a:0},
-{s:"G",sub:"Verbs",sn:1,th:"ฉัน .... ดนตรี",ph:"Chǎn .... don-dtree",q:"Choose the correct word to fill in the blank:",o:["กิน (gin)","ดื่ม (dùem)","ฟัง (fang)","นั่ง (nâng)"],a:2},
-  {s:"G",sub:"Sentence structure",sn:2,th:"แมวอยู่ .... โต๊ะ",ph:"Maew yòo .... dtó",q:"Choose the correct word to fill in the blank:",o:["ใน (nai)","บน (bon)","กับ (gàp)","ไป (pai)"],a:1},
-  {s:"G",sub:"Sentence structure",sn:2,th:"เธอสวย ....",ph:"Ter sǔay ....",q:"Choose the correct word to fill in the blank:",o:["น้อย (nóoi)","เร็ว (reo)","มาก (mâak)","ช้า (cháa)"],a:2},
-  {s:"G",sub:"Prepositions",sn:2,th:"แมวอยู่ .... โต๊ะ",ph:"Maew yòo .... dtó",q:"Choose the correct word to fill in the blank:",o:["ใน (nai)","บน (bon)","กับ (gàp)","ไป (pai)"],a:1},
-  {s:"G",sub:"Adjectives",sn:2,th:"เธอสวย ....",ph:"Ter sǔay ....",q:"Choose the correct word to fill in the blank:",o:["น้อย (nóoi)","เร็ว (reo)","มาก (mâak)","ช้า (cháa)"],a:2},
-{s:"G",sub:"Sentence structure",sn:2,th:"ฉัน .... ไปตลาด",ph:"Chǎn .... pai dtà-làat",q:"Choose the correct word to fill in the blank:",o:["อยาก (yàak)","กลับ (glàp)","นอน (norn)","ดู (duu)"],a:0},
-{s:"G",sub:"Sentence structure",sn:2,th:"วันนี้ .... ร้อน",ph:"Wan née .... rón",q:"Choose the correct word to fill in the blank:",o:["อาหาร (aa-hǎan)","อากาศ (aa-gàat)","น้ำ (náam)","คน (khon)"],a:1},
-{s:"G",sub:"Sentence structure",sn:2,th:"เขา .... รถไปทำงาน",ph:"Khǎo .... rót pai tham ngaan",q:"Choose the correct word to fill in the blank:",o:["นั่ง (nâng)","กิน (gin)","ดื่ม (dùem)","นอน (norn)"],a:0},
-{s:"G",sub:"Sentence structure",sn:2,th:"บ้านของฉัน .... ที่นี่",ph:"Bâan khǒng chǎn .... thêe nêe",q:"Choose the correct word to fill in the blank:",o:["ไม่ (mâi)","อยู่ (yòo)","ดี (dee)","เร็ว (reo)"],a:1},
-{s:"G",sub:"Sentence structure",sn:2,th:"ฉันไป .... ทุกวัน",ph:"Chǎn pai .... thúk wan",q:"Choose the correct word to fill in the blank:",o:["นอน (norn)","กิน (gin)","ทำงาน (tham ngaan)","ดื่ม (dùem)"],a:2},
-{s:"G",sub:"Expressions",sn:3,th:"ฉัน .... หมา",ph:"Chǎn .... mǎa",q:"Choose the correct word to fill in the blank:",o:["ชอบ (chôrp)","นั่ง (nâng)","ปิ้ง (pîng)","นอน (norn)"],a:0},
-{s:"G",sub:"Expressions",sn:3,th:"วันนี้ฉัน .... ไม่สบาย",ph:"Wan née chǎn .... mâi sa-baai",q:"Choose the correct word to fill in the blank:",o:["รู้สึก (rúu-sùek)","นอน (norn)","วิ่ง (wîng)","ทำงาน (tham ngaan)"],a:0},
-{s:"G",sub:"Expressions",sn:3,th:"ฉันกำลัง .... น้ำหนัก",ph:"Chǎn gam-lang .... náam-nàk",q:"Choose the correct word to fill in the blank:",o:["ขาย (khǎai)","กิน (gin)","ลด (lót)","ดื่ม (dùem)"],a:2},
-{s:"G",sub:"Expressions",sn:3,th:"ฉันชอบ .... ผลไม้",ph:"Chǎn chôrp .... phǒn-lá-mái",q:"Choose the correct word to fill in the blank:",o:["กิน (gin)","นั่ง (nâng)","เย็บ (yép)","ปัก (pàk)"],a:0},
-{s:"G",sub:"Expressions",sn:3,th:"วันเสาร์ฉัน .... ที่บ้าน",ph:"Wan sǎo chǎn .... thêe bâan",q:"Choose the correct word to fill in the blank:",o:["วิ่ง (wîng)","อยู่ (yòo)","ขาย (khǎai)","เปิด (pèrt)"],a:1},
-];
-
-const SC={
-1:{bg:'#EEF6FF',c:'#1A4C8A',bar:'#4A90D9'},
-2:{bg:'#FFFBF0',c:'#6B4C00',bar:'#C9972A'},
-3:{bg:'#F0FBF7',c:'#0A4A38',bar:'#1A9E78'},
-4:{bg:'#F8F0FF',c:'#4A2880',bar:'#8B5CF6'}
-};
-
-let st={phase:'intro',name:'',empId:'',dept:'',ans:new Array(Q.length).fill(-1),done:false};
-const app=document.getElementById('app');
-
-function shuffle(arr,correctIdx){
-// Pair each option with whether it's correct
-const paired=arr.map((o,i)=>({o,correct:i===correctIdx}));
-// Fisher-Yates shuffle
-for(let i=paired.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[paired[i],paired[j]]=[paired[j],paired[i]];
-}
-return{opts:paired.map(p=>p.o),ans:paired.findIndex(p=>p.correct)};
-}
-
-// Pre-shuffle all questions once when test starts
-function shuffleAllQuestions(){
-// Shuffle questions within each section separately, keep sections in order L→R→G
-const sections=['L','R','G'];
-let shuffledQ=[];
-sections.forEach(sec=>{
-const sectionQs=Q.map((q,i)=>({...q,origIdx:i})).filter(q=>q.s===sec);
-// Fisher-Yates shuffle on questions
-for(let i=sectionQs.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[sectionQs[i],sectionQs[j]]=[sectionQs[j],sectionQs[i]];
-}
-shuffledQ=shuffledQ.concat(sectionQs);
-});
-st.questionOrder=shuffledQ; // shuffled question objects with origIdx
-
-// Also shuffle choices for each question
-st.shuffled=shuffledQ.map(q=>{
-const {opts,ans}=shuffle(q.o,q.a);
-return{opts,ans};
-});
-}
-
-function toast(msg,dur=3000){
-const t=document.getElementById('toast');
-t.textContent=msg;t.classList.add('show');
-setTimeout(()=>t.classList.remove('show'),dur);
-}
-
-function render(){
-if(st.phase==='intro')renderIntro();
-else if(st.phase==='test')renderTest();
-else renderResults();
-}
-
-function renderIntro(){
-app.innerHTML=`
-<div class="hero">
- <div class="hero-logo">
-   <div class="hero-logo-icon">🇹🇭</div>
-   <div class="hero-logo-text"><div class="co">Delta Electronics Thailand</div><div class="prog">Thai Language Program</div></div>
- </div>
- <h1>Thai <span>Placement</span> Test</h1>
- <p>Beginner level assessment for expatriate employees — Listening & Reading</p>
- <div class="hero-chips">
-   <div class="chip"><span class="dot" style="background:#4A90D9"></span>20 Listening</div>
-   <div class="chip"><span class="dot" style="background:#C9972A"></span>20 Reading</div>
-   <div class="chip"><span class="dot" style="background:#1A9E78"></span>20 Grammar</div>
-   <div class="chip"><span class="dot" style="background:#8B5CF6"></span>⏱ 1 hour time limit</div>
- </div>
-</div>
-<div class="card">
- <div class="card-title">Your information</div>
- <div class="form-grid">
-   <div class="fgroup"><label>Full name *</label><input id="f-name" placeholder="e.g. John Smith" oninput="chk()"></div>
-   <div class="fgroup"><label>Employee ID *</label><input id="f-id" placeholder="e.g. DET-12345" oninput="chk()"></div>
- </div>
- <div class="fgroup"><label>Department (optional)</label><input id="f-dept" placeholder="e.g. Engineering" style="margin-bottom:0"></div>
- <button class="btn-start" id="btn-start" disabled onclick="startTest()">Start the test →</button>
-</div>`;
+function validateEmail(){
+  const email=document.getElementById('f-email');
+  email.value=email.value.replace(/\s/g,'');
+  chk();
 }
 
 function chk(){
-const n=document.getElementById('f-name').value.trim();
-const i=document.getElementById('f-id').value.trim();
-document.getElementById('btn-start').disabled=!(n&&i);
+  const n=document.getElementById('f-name').value.trim();
+  const i=document.getElementById('f-id').value.trim();
+  const e=document.getElementById('f-email').value.trim();
+
+  const validEmail=/^[^\s@]+@deltaww\.com$/i.test(e);
+
+  document.getElementById('btn-start').disabled=!(n && i && validEmail);
 }
 
-function startTest(){
-st.name=document.getElementById('f-name').value.trim();
-st.empId=document.getElementById('f-id').value.trim();
-st.dept=document.getElementById('f-dept').value.trim()||'—';
-st.phase='test';
-st.startTime=Date.now();
-st.timeLimit=60*60*1000;
-shuffleAllQuestions();
-render();
-window.scrollTo(0,0);
-startTimer();
+function playSampleAudio(){
+  if(!('speechSynthesis' in window)){
+    alert('Please use Chrome or Edge');
+    return;
+  }
+
+  const u=new SpeechSynthesisUtterance('สวัสดีครับ ยินดีต้อนรับสู่แบบทดสอบภาษาไทย');
+  u.lang='th-TH';
+  u.rate=0.5;
+  speechSynthesis.speak(u);
 }
 
-let timerInterval=null;
-function startTimer(){
-if(timerInterval)clearInterval(timerInterval);
-timerInterval=setInterval(()=>{
-if(st.phase!=='test'){clearInterval(timerInterval);return}
-const elapsed=Date.now()-st.startTime;
-const remaining=st.timeLimit-elapsed;
-updateTimerDisplay(remaining);
-if(remaining<=0){
-clearInterval(timerInterval);
-toast('⏰ Time is up! Submitting your test...',3000);
-setTimeout(()=>submitTest(),1500);
+function playQuestionAudio(){
+  const u=new SpeechSynthesisUtterance('สวัสดี');
+  u.lang='th-TH';
+  u.rate=0.5;
+  speechSynthesis.speak(u);
 }
-},1000);
-}
-
-function updateTimerDisplay(remaining){
-const el=document.getElementById('timer-display');
-if(!el)return;
-const totalSec=Math.max(0,Math.floor(remaining/1000));
-const mins=Math.floor(totalSec/60);
-const secs=totalSec%60;
-const label=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-let cls='timer-wrap';
-if(totalSec<=300)cls+=' danger';      // last 5 mins = red
-else if(totalSec<=600)cls+=' warning'; // last 10 mins = amber
-el.innerHTML=`<div class="${cls}"><span class="timer-dot"></span>⏱ ${label}</div>`;
-}
-
-function renderTest(){
-const cnt=st.ans.filter(a=>a>=0).length;
-const pct=Math.round(cnt/Q.length*100);
-let h=`<div class="progress-bar"><div class="pb-inner"><div class="pb-track"><div class="pb-fill" style="width:${pct}%"></div></div><div class="pb-label">${cnt} / ${Q.length} answered</div><div id="timer-display"></div></div></div>`;
-
-const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
-[{k:'L',l:'Listening',ic:'🔊',ib:'#EEF6FF',ic2:'#1A4C8A'},{k:'R',l:'Reading',ic:'📖',ib:'#FFFBF0',ic2:'#6B4C00'},{k:'G',l:'Grammar',ic:'✏️',ib:'#F0FBF7',ic2:'#0A4A38'}].forEach(sec=>{
-const qs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s===sec.k);
-h+=`<div class="section"><div class="section-head"><div class="section-badge" style="background:${sec.ib};color:${sec.ic2}">${sec.ic}</div><div class="section-title">${sec.l}</div><div class="section-count">${qs.length} questions</div></div>`;
-let cur='';
-qs.forEach(q=>{
-if(q.sub!==cur){cur=q.sub;const c=SC[q.sn];h+=`<div class="sublevel" style="background:${c.bg};color:${c.c}">${q.sub}</div>`}
-const has=st.ans[q.idx]>=0;
-h+=`<div class="q-card${has?' answered':''}"><div class="q-num">Q${q.idx+1}</div>`;
-if(sec.k==='L'){
-h+=`<button class="q-audio" id="au-${q.idx}" onclick="playTh(${q.idx})">
-         <div class="play-icon" id="pi-${q.idx}">▶</div>
-         <div><div style="font-size:13px;font-weight:400">Play audio (slow)</div><div style="font-size:11px;color:var(--text3);margin-top:1px">Click to hear Thai</div></div>
-       </button>`;
-// Listening: hide Thai text and phonetics — audio only
-} else {
-// Reading & Grammar: show Thai text and phonetics
-h+=`<div class="q-thai">${q.th.replace(/\n/g,'<br>')}</div>`;
-h+=`<div class="q-phonetic">${q.ph.replace(/\n/g,' — ')}</div>`;
-}
-h+=`<div class="q-text">${q.q}</div><div class="opts">`;
-const shuffledOpts=st.shuffled?st.shuffled[q.idx].opts:q.o;
-shuffledOpts.forEach((o,oi)=>{
-const sel=st.ans[q.idx]===oi?'selected':'';
-h+=`<button class="opt ${sel}" onclick="pick(${q.idx},${oi})"><span class="radio"></span>${o}</button>`;
-});
-h+=`</div></div>`;
-});
-h+=`</div>`;
-});
-
-h+=`<div class="submit-row"><button class="btn-submit" ${cnt<Q.length?'disabled':''} onclick="submitTest()">Submit test</button>`;
-if(cnt<Q.length)h+=`<div class="submit-hint">${Q.length-cnt} question${Q.length-cnt>1?'s':''} remaining</div>`;
-h+=`</div>`;
-app.innerHTML=h;
-}
-
-function pick(qi,oi){if(st.done)return;st.ans[qi]=oi;renderTest()}
-
-function playTh(idx){
-if(!('speechSynthesis' in window)){toast('Please use Chrome or Edge for audio');return}
-window.speechSynthesis.cancel();
-const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
-const q=allQs[idx];
-const btn=document.getElementById('au-'+idx);
-const pi=document.getElementById('pi-'+idx);
-
-if(btn){
-btn.classList.add('playing');
-if(pi)pi.innerHTML='<div class="play-waves"><div class="wave"></div><div class="wave"></div><div class="wave"></div></div>';
-}
-
-// Split by newline — each line is one speaker
-const rawLines=q.th.split('\n').filter(l=>l.trim().length>0);
-
-// For each line: strip "A: " or "B: " prefix, keep Thai text only
-const segments=rawLines.map(line=>{
-const isB=/^B:/i.test(line.trim());
-const text=line.replace(/^[AB]:\s*/i,'').trim();
-return{text,isB};
-});
-
-let i=0;
-function speakNext(){
-if(i>=segments.length){
-if(btn){btn.classList.remove('playing');if(pi)pi.innerHTML='▶'}
-return;
-}
-const seg=segments[i];
-const u=new SpeechSynthesisUtterance(seg.text);
-u.lang='th-TH';
-u.rate=0.45;
-u.pitch=seg.isB?1.4:0.85; // B = higher pitch, A = lower pitch
-u.volume=1.0;
-u.onend=()=>{i++;setTimeout(speakNext,900)};
-u.onerror=()=>{i++;setTimeout(speakNext,900)};
-window.speechSynthesis.speak(u);
-i++;
-}
-
-// Make sure voices are loaded before speaking
-const voices=window.speechSynthesis.getVoices();
-if(voices.length===0){
-window.speechSynthesis.onvoiceschanged=()=>{speakNext();}
-} else {
-speakNext();
-}
-}
-
-function submitTest(){
-if(timerInterval)clearInterval(timerInterval);
-st.done=true;
-st.timestamp=new Date().toISOString();
-saveResult();
-st.phase='results';
-render();
-window.scrollTo(0,0);
-}
-
-async function saveResult(){
-const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
-const correctAns=i=>(st.shuffled?st.shuffled[i].ans:allQs[i].a);
-const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
-const pct=Math.round(tot/Q.length*100);
-const ls=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='L').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
-const rs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
-const gs=allQs.map((q,idx)=>({...q,idx})).filter(q=>q.s==='G').reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
-let lv,cl;
-if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary'}
-else if(pct>=70){lv='Beginner Mid-High';cl='Class B2 — Upper Beginner'}
-else if(pct>=55){lv='Beginner Mid';cl='Class B1 — Core Beginner'}
-else if(pct>=35){lv='Beginner Low-Mid';cl='Class A2 — Early Beginner'}
-else{lv='Beginner Low';cl='Class A1 — Absolute Starter'}
-
-const ts=new Date(st.timestamp);
-const dateStr=ts.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
-const timeStr=ts.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-
-// Save to localStorage for Excel export
-const record={
-name:st.name,
-employee_id:st.empId,
-department:st.dept,
-date:dateStr,
-time:timeStr,
-timestamp:st.timestamp,
-total_score:`${tot}/${Q.length}`,
-percentage:pct,
-listening_score:`${ls}/20`,
-reading_score:`${rs}/20`,
-grammar_score:`${gs}/20`,
-placement_level:lv,
-class_recommendation:cl
-};
-try{
-const existing=JSON.parse(localStorage.getItem('thai_test_results')||'[]');
-existing.push(record);
-localStorage.setItem('thai_test_results',JSON.stringify(existing));
-}catch(e){console.warn('localStorage save failed:',e)}
-
-const saving=document.getElementById('saving');
-saving.classList.add('visible');
-try{
-const fd=new FormData();
-fd.append('form-name','thai-placement-results');
-fd.append('bot-field','');
-fd.append('name',st.name);
-fd.append('employee_id',st.empId);
-fd.append('department',st.dept);
-fd.append('date',`${dateStr} ${timeStr}`);
-fd.append('total_score',`${tot}/${Q.length}`);
-fd.append('percentage',`${pct}%`);
-fd.append('listening_score',`${ls}/20`);
-fd.append('reading_score',`${rs}/20`);
-fd.append('placement_level',lv);
-fd.append('class_recommendation',cl);
-await fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(fd).toString()});
-}catch(e){console.warn('Could not save to server:',e)}
-finally{saving.classList.remove('visible')}
-}
-
-function renderResults(){
-const allQs=st.questionOrder||Q.map((q,i)=>({...q,origIdx:i}));
-const correctAns=i=>(st.shuffled?st.shuffled[i].ans:allQs[i].a);
-const tot=st.ans.reduce((s,a,i)=>s+(a===correctAns(i)?1:0),0);
-const pct=Math.round(tot/Q.length*100);
-const lqs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='L');
-const rqs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='R');
-const gqs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='G');
-const ls=lqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
-const rs=rqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
-const gs=gqs.reduce((s,q)=>s+(st.ans[q.idx]===correctAns(q.idx)?1:0),0);
-
-let lv,cl,dt;
-if(pct>=85){lv='Beginner High';cl='Class B2 — Ready for Elementary';dt='Strong foundation in Thai basics. Can move on to Elementary with a focus on conversations and daily Thai.'}
-else if(pct>=70){lv='Beginner Mid-High';cl='Class B2 — Upper Beginner';dt='Good grasp of signs, numbers and common phrases. Recommended to build more dialogue skills.'}
-else if(pct>=55){lv='Beginner Mid';cl='Class B1 — Core Beginner';dt='Understands basic signs and some phrases. Needs focused practice with vocabulary and numbers.'}
-else if(pct>=35){lv='Beginner Low-Mid';cl='Class A2 — Early Beginner';dt='Recognizes some Thai words. Start with structured beginner classes covering alphabet and survival phrases.'}
-else{lv='Beginner Low';cl='Class A1 — Absolute Starter';dt='Just starting out. Begin with Thai alphabet (44 consonants), tone marks, and essential survival vocabulary.'}
-
-const subs={};
-Q.forEach((q,i)=>{const k=q.s+'|'+q.sub;if(!subs[k])subs[k]={l:q.sub,s:q.s,sn:q.sn,c:0,t:0};subs[k].t++;if(st.ans[i]===q.a)subs[k].c++});
-const wrongs=allQs.map((q,i)=>({...q,idx:i})).filter(q=>st.ans[q.idx]!==correctAns(q.idx));
-const now=new Date(st.timestamp||Date.now());
-const dateStr=now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
-const timeStr=now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
-
-let h=`<div class="result-hero"><h2>Placement Results</h2><div class="info">${st.name} — ${st.empId} — ${st.dept}</div><div class="date">Completed: ${dateStr} at ${timeStr}</div></div>`;
-h+=`<div class="score-row">
-   <div class="sc-card"><div class="sc-label">Total</div><div class="sc-val">${tot}/${Q.length}</div></div>
-   <div class="sc-card"><div class="sc-label">Score</div><div class="sc-val">${pct}%</div></div>
-   <div class="sc-card"><div class="sc-label">Listening</div><div class="sc-val">${ls}/20</div></div>
-   <div class="sc-card"><div class="sc-label">Reading</div><div class="sc-val">${rs}/20</div></div>
-   <div class="sc-card"><div class="sc-label">Grammar</div><div class="sc-val">${gs}/20</div></div>
- </div>`;
-
-h+=`<div class="placement"><div class="lv-tag">Placement level</div><div class="lv-name">${lv}</div><div class="class-rec">${cl}</div><div class="lv-desc">${dt}</div></div>`;
-
-['L','R','G'].forEach(sec=>{
-const label=sec==='L'?'Listening breakdown':sec==='R'?'Reading breakdown':'Grammar breakdown';
-h+=`<div class="breakdown"><h3>${label}</h3>`;
-Object.values(subs).filter(s=>s.s===sec).sort((a,b)=>a.sn-b.sn).forEach(s=>{
-const p=Math.round(s.c/s.t*100);
-const sc=SC[s.sn];
-const col=p>=80?'var(--green)':p>=50?'var(--gold)':'var(--red)';
-h+=`<div class="bd-row"><div class="bd-lbl">${s.l}</div><div class="bd-track"><div class="bd-fill" style="width:${p}%;background:${sc.bar}"></div></div><div class="bd-score" style="color:${col}">${s.c}/${s.t} (${p}%)</div></div>`;
-});
-h+=`</div>`;
-});
-
-if(wrongs.length>0){
-h+=`<div class="wrong-box"><h3>Incorrect answers (${wrongs.length})</h3>`;
-wrongs.forEach(q=>{
-const opts=st.shuffled?st.shuffled[q.idx].opts:q.o;
-const correct=correctAns(q.idx);
-h+=`<div class="wi"><strong style="color:var(--text3)">Q${q.idx+1}</strong> — ${q.q}<br>
-     <span style="color:var(--red)">✗ Your answer: ${opts[st.ans[q.idx]]||'—'}</span>&nbsp;&nbsp;
-     <span style="color:var(--green)">✓ Correct: ${opts[correct]}</span></div>`;
-});
-h+=`</div>`;
-}
-
-h+=`<div class="actions">
-   <button class="btn-action" onclick="copyRes()">📋 Copy summary</button>
-   <button class="btn-action" onclick="exportExcel()">📊 Export Excel</button>
-   <button class="btn-action" onclick="window.print()">🖨️ Print</button>
-   <button class="btn-action" onclick="retake()">↺ Retake</button>
- </div>`;
-h+=`<div class="footer">Delta Electronics (Thailand) — Thai Language Program<br>Placement Test • ${dateStr} ${timeStr}<br><span style="font-size:11px">Result automatically recorded ✓</span></div>`;
-app.innerHTML=h;
-}
-
-function copyRes(){
-const tot=st.ans.reduce((s,a,i)=>s+(a===Q[i].a?1:0),0);
-const pct=Math.round(tot/Q.length*100);
-const ls=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='L').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
-const rs=Q.map((q,i)=>({...q,idx:i})).filter(q=>q.s==='R').reduce((s,q)=>s+(st.ans[q.idx]===q.a?1:0),0);
-let lv;
-if(pct>=85)lv='Beginner High — Ready for Elementary';
-else if(pct>=70)lv='Beginner Mid-High — Upper Beginner';
-else if(pct>=55)lv='Beginner Mid — Core Beginner';
-else if(pct>=35)lv='Beginner Low-Mid — Early Beginner';
-else lv='Beginner Low — Absolute Starter';
-const txt=`THAI PLACEMENT TEST RESULT\n${'─'.repeat(32)}\nName:         ${st.name}\nEmployee ID:  ${st.empId}\nDepartment:   ${st.dept}\nDate:         ${new Date().toLocaleDateString('en-GB')}\n\nTotal Score:  ${tot}/${Q.length} (${pct}%)\nListening:    ${ls}/20\nReading:      ${rs}/20\n\nPlacement:    ${lv}\n${'─'.repeat(32)}\nDelta Electronics (Thailand) — Thai Language Program`;
-navigator.clipboard.writeText(txt).then(()=>toast('Result copied to clipboard ✓')).catch(()=>toast('Could not copy — use Print instead'));
-}
-
-function exportExcel(){
-// Load all saved results from localStorage
-let results=[];
-try{results=JSON.parse(localStorage.getItem('thai_test_results')||'[]');}catch(e){}
-
-if(results.length===0){toast('No saved results found on this device');return}
-
-// Build CSV with BOM for Excel Thai character support
-const headers=['Name','Employee ID','Department','Date','Time','Total Score','Percentage (%)','Listening Score','Reading Score','Placement Level','Class Recommendation'];
-const rows=results.map(r=>[
-r.name,r.employee_id,r.department,r.date,r.time,
-r.total_score,r.percentage,r.listening_score,r.reading_score,
-r.placement_level,r.class_recommendation
-]);
-
-const csv='\uFEFF'+[headers,...rows].map(row=>row.map(cell=>`"${String(cell).replace(/"/g,'""')}"`).join(',')).join('\n');
-const blob=new Blob([csv],{type:'text/csv;charset=utf-8'});
-const url=URL.createObjectURL(blob);
-const a=document.createElement('a');
-a.href=url;
-a.download=`Delta_Thai_Placement_Results_${new Date().toISOString().slice(0,10)}.csv`;
-a.click();
-URL.revokeObjectURL(url);
-toast(`Exported ${results.length} result${results.length>1?'s':''} to Excel ✓`);
-}
-
-function retake(){
-if(timerInterval)clearInterval(timerInterval);
-st={phase:'intro',name:'',empId:'',dept:'',ans:new Array(Q.length).fill(-1),done:false};
-render();window.scrollTo(0,0);
-}
-
-render();
 </script>
+
 </body>
 </html>
