@@ -612,7 +612,7 @@ localStorage.setItem('thai_test_results',JSON.stringify(existing));
 const saving=document.getElementById('saving');
 saving.classList.add('visible');
 try{
-const PA_URL='https://default19f2582317ff421fad4e8fed035aed.da.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5c5f759c6c054bc4b0b2da61ef7b19f0/triggers/manual/paths/invoke?api-version=1';
+const PA_URL='https://default19f2582317ff421fad4e8fed035aed.da.environment.api.powerplatform.com:443/powerautomate/automations/direct/workflows/5c5f759c6c054bc4b0b2da61ef7b19f0/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=nKZZNVtWpnBJp8ZIXaZMLbkUAcshb6cBRIHwsD0fD80';
 const payload={
   name:st.name,
   employee_id:st.empId,
