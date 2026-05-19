@@ -61,6 +61,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);line-height:
 @media(max-width:480px){.form-grid{grid-template-columns:1fr}}
 .fgroup label{font-size:12px;font-weight:500;color:var(--text3);display:block;margin-bottom:5px;letter-spacing:0.04em;text-transform:uppercase}
 .fgroup input{width:100%;padding:11px 14px;border:1.5px solid var(--border);border-radius:var(--r);font-size:15px;font-family:var(--font);font-weight:300;background:var(--bg);color:var(--text);outline:none;transition:all .2s}
+.fgroup input:focus{border-color:var(--gold);background:#fff;box-shadow:0 0 0 3px rgba(0,112,201,0.08)}
 .fgroup input.error{border-color:#C0392B;background:#FEF2F2;}
 .fgroup input.error:focus{border-color:#C0392B;box-shadow:0 0 0 3px rgba(192,57,43,0.1);}
 .fgroup input.valid{border-color:#2E7D32;background:#F0FDF4;}
@@ -351,7 +352,7 @@ app.innerHTML=`
 <div class="form-grid">
   <div class="fgroup"><label>Full name *</label><input id="f-name" placeholder="e.g. John Smith" oninput="chk()"></div>
   <div class="fgroup"><label>Employee ID *</label><input id="f-id" placeholder="e.g. 123456" inputmode="numeric" pattern="[0-9]*" maxlength="10" oninput="this.value=this.value.replace(/\\D/g,'');chk()"></div>
-  <div class="fgroup" style="grid-column:1/-1"><label>Work Email *</label><input id="f-email" type="email" placeholder="name@deltaww.com" oninput="validateEmail()"><div id="email-error" style="display:none;margin-top:6px;font-size:12.5px;color:#C0392B;display:flex;align-items:center;gap:5px"><span>⚠️</span><span id="email-error-msg"></span></div><div id="email-hint" style="margin-top:5px;font-size:12px;color:var(--text3)">Must be a @deltaww.com address</div></div>
+  <div class="fgroup" style="grid-column:1/-1"><label>Work Email *</label><input id="f-email" type="email" placeholder="name@deltaww.com" oninput="validateEmail()"><div id="email-error" style="display:none;margin-top:6px;font-size:12.5px;color:#C0392B;align-items:center;gap:5px"><span>⚠️</span><span id="email-error-msg"></span></div><div id="email-hint" style="margin-top:5px;font-size:12px;color:var(--text3)">Must be a @deltaww.com address</div></div>
 </div>
 <div class="fgroup"><label>Department (optional)</label><input id="f-dept" placeholder="e.g. Engineering" style="margin-bottom:0"></div>
 <button class="q-audio" style="width:100%;justify-content:center;margin:18px 0 10px" onclick="playSampleAudio()">
